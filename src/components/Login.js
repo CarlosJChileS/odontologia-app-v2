@@ -9,34 +9,40 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    // Función para manejar el inicio de sesión
-    const handleLogin = (role) => (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
 
-        // Simulación de validación de credenciales basada en el rol
-        switch (role) {
-            case 'admin':
-                sessionStorage.setItem('usuarioRol', 'admin');
-                navigate('/menu-administrador');
-                break;
-            case 'paciente':
-                sessionStorage.setItem('usuarioRol', 'paciente');
-                navigate('/menu-paciente');
-                break;
-            case 'odontologo':
-                sessionStorage.setItem('usuarioRol', 'odontologo');
-                navigate('/menu-odontologo');
-                break;
-            default:
-                alert('Credenciales incorrectas. Intente de nuevo.');
-                break;
+        // Simulación de consulta de usuario (esto será reemplazado con una base de datos)
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+            sessionStorage.setItem('usuarioRol', user.role);
+
+            // Redirigir según el rol
+            switch (user.role) {
+                case 'admin':
+                    navigate('/menu-administrador');
+                    break;
+                case 'paciente':
+                    navigate('/menu-paciente');
+                    break;
+                case 'odontologo':
+                    navigate('/menu-odontologo');
+                    break;
+                default:
+                    alert('Rol no reconocido. Contacte al administrador.');
+                    break;
+            }
+        } else {
+            alert('Credenciales incorrectas. Intente de nuevo.');
         }
     };
 
     return (
         <div className="login-container">
             <h1>Iniciar Sesión</h1>
-            <form>
+            <form onSubmit={handleLogin}>
                 <input
                     type="email"
                     placeholder="Correo electrónico"
@@ -51,24 +57,7 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <div className="login-buttons">
-                    <button type="button" onClick={handleLogin('paciente')}>
-                        Iniciar sesión como Paciente
-                    </button>
-                    <button type="button" onClick={handleLogin('odontologo')}>
-                        Iniciar sesión como Odontólogo
-                    </button>
-                    <button type="button" onClick={() => navigate('/register')}>
-                        Registrarse
-                    </button>
-                    <button
-                        type="button"
-                        className="admin-login"
-                        onClick={handleLogin('admin')}
-                    >
-                        Iniciar como Administrador
-                    </button>
-                </div>
+                <button type="submit">Iniciar Sesión</button>
             </form>
         </div>
     );
