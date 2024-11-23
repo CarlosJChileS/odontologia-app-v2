@@ -1,0 +1,79 @@
+/* src/styles/components/GestionarHistoriasClinicas.css */
+
+.gestionar-historias-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.gestionar-historias-container h1 {
+    text-align: center;
+    color: #333;
+}
+
+.historias-lista ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.historias-lista li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.historias-lista li p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.historias-lista button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.historias-lista button:hover {
+    background-color: #0056b3;
+}
+
+.historia-detalles {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #e9ecef;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.historia-detalles h2 {
+    color: #333;
+}
+
+.historia-detalles p {
+    margin: 5px 0;
+    color: #444;
+}
+
+.historia-detalles button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.historia-detalles button:hover {
+    background-color: #c82333;
+}

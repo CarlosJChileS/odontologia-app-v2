@@ -1,0 +1,18 @@
+[
+    {
+        "nombre": "Carlos",
+        "apellido": "Ramírez",
+        "cedula": "1112223334",
+        "email": "carlos.estudiante@example.com",
+        "telefono": "912345678",
+        "rol": "Estudiante"
+    },
+    {
+        "nombre": "Laura",
+        "apellido": "Sánchez",
+        "cedula": "5556667778",
+        "email": "laura.odontologo@example.com",
+        "telefono": "876543210",
+        "rol": "Odontólogo"
+    }
+]

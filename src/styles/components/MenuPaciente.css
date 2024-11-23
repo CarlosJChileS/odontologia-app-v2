@@ -1,0 +1,135 @@
+/* src/styles/components/MenuPaciente.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-paciente-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    width: 80%;
+    max-width: 1200px;
+    min-height: 80vh;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.menu-paciente, .citas-programadas {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    width: 45%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.menu-paciente {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.menu-paciente h1 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.menu-paciente button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.menu-paciente button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
+.citas-programadas {
+    text-align: left;
+}
+
+.citas-programadas h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.citas-programadas ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.citas-programadas li {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.citas-programadas li:hover {
+    transform: translateY(-5px);
+}
+
+.citas-programadas li p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+.citas-programadas li button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.citas-programadas li button:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .menu-paciente-container {
+        flex-direction: column;
+        width: 95%;
+        padding: 10px;
+    }
+
+    .menu-paciente, .citas-programadas {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

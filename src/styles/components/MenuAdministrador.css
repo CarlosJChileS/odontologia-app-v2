@@ -1,0 +1,36 @@
+/* src/styles/components/MenuAdministrador.css */
+
+.menu-administrador {
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.menu-administrador h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.menu-administrador button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #00796b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-administrador button:hover {
+    background-color: #004d40;
+}

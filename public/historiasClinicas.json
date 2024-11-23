@@ -1,0 +1,34 @@
+[
+    {
+        "idHistoriaClinica": 1,
+        "cedula": "1234567890",
+        "tipoSangre": "O+",
+        "motivoConsulta": "Dolor en muela",
+        "enfermedadActual": "Caries",
+        "antecedentesPatoPersonales": "Diabetes",
+        "constantesVitales": "Presión 120/80",
+        "sistemaEstomatognatico": "Normal",
+        "odontograma": "Muelas afectadas",
+        "indicadoresSaludBucal": "Baja",
+        "indicesCPO": "3",
+        "diagnostico": "Caries avanzada",
+        "procedimientos": "Limpieza y tratamiento de caries",
+        "evolucion": "Mejora en 1 semana"
+    },
+    {
+        "idHistoriaClinica": 2,
+        "cedula": "9876543210",
+        "tipoSangre": "A+",
+        "motivoConsulta": "Revisión general",
+        "enfermedadActual": "Gingivitis leve",
+        "antecedentesPatoPersonales": "Hipertensión",
+        "constantesVitales": "Presión 130/85",
+        "sistemaEstomatognatico": "Normal",
+        "odontograma": "Sin afectaciones",
+        "indicadoresSaludBucal": "Media",
+        "indicesCPO": "1",
+        "diagnostico": "Salud bucal regular",
+        "procedimientos": "Limpieza dental",
+        "evolucion": "Control en 6 meses"
+    }
+]

@@ -1,0 +1,47 @@
+/* src/styles/components/EliminarCita.css */
+
+.eliminar-cita {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.eliminar-cita h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.eliminar-cita ul {
+    list-style: none;
+    padding: 0;
+}
+
+.eliminar-cita li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.eliminar-cita button {
+    padding: 5px 10px;
+    background-color: #e30613;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.eliminar-cita button:hover {
+    background-color: #b60510;
+}

@@ -1,0 +1,34 @@
+<historiasClinicas>
+    <historiaClinica>
+        <idHistoriaClinica>1</idHistoriaClinica>
+        <cedula>1234567892</cedula>
+        <tipoSangre>O-</tipoSangre>
+        <motivoConsulta>Muelas del juicio</motivoConsulta>
+        <enfermedadActual>Absceso dental</enfermedadActual>
+        <antecedentesPatoPersonales>Asma</antecedentesPatoPersonales>
+        <constantesVitales>Presión 125/80</constantesVitales>
+        <sistemaEstomatognatico>Leve inflamación</sistemaEstomatognatico>
+        <odontograma>Muelas del juicio afectadas</odontograma>
+        <indicadoresSaludBucal>Alta</indicadoresSaludBucal>
+        <indicesCPO>2</indicesCPO>
+        <diagnostico>Necesidad de extracción</diagnostico>
+        <procedimientos>Extracción programada</procedimientos>
+        <evolucion>En espera de la cirugía</evolucion>
+    </historiaClinica>
+    <historiaClinica>
+        <idHistoriaClinica>2</idHistoriaClinica>
+        <cedula>1122334455</cedula>
+        <tipoSangre>AB+</tipoSangre>
+        <motivoConsulta>Sangrado de encías</motivoConsulta>
+        <enfermedadActual>Gingivitis severa</enfermedadActual>
+        <antecedentesPatoPersonales>Ninguno</antecedentesPatoPersonales>
+        <constantesVitales>Presión 110/70</constantesVitales>
+        <sistemaEstomatognatico>Encías inflamadas</sistemaEstomatognatico>
+        <odontograma>Encías sensibles</odontograma>
+        <indicadoresSaludBucal>Baja</indicadoresSaludBucal>
+        <indicesCPO>4</indicesCPO>
+        <diagnostico>Gingivitis crónica</diagnostico>
+        <procedimientos>Tratamiento periodontal</procedimientos>
+        <evolucion>Mejora parcial en 2 semanas</evolucion>
+    </historiaClinica>
+</historiasClinicas>
