@@ -1,5 +1,3 @@
-// src/components/Login.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
@@ -57,7 +55,16 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Iniciar Sesión</button>
+                <div className="login-buttons">
+                    <button type="submit">Iniciar Sesión</button>
+                    <button
+                        type="button"
+                        className="register-btn"
+                        onClick={() => navigate('/register')}
+                    >
+                        Registrarse
+                    </button>
+                </div>
             </form>
         </div>
     );
