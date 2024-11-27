@@ -16,7 +16,7 @@ html, body {
 .login-container {
     max-width: 720px;
     width: 100%;
-    padding: 2rem;
+    padding: rem;
     border-radius: 50px;
     text-align: center;
 }
@@ -27,11 +27,6 @@ html, body {
     font-size: 1.8rem;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.login-container form {
-    display: flex;
-    flex-direction: column;
 }
 
 .login-container input {
