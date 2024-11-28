@@ -5,10 +5,10 @@ html, body {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif; /* Fuente más moderna */
-    background: linear-gradient(45deg, #D62828, #4CAF50); /* Fondo gradiente suave */
+    background: linear-gradient(45deg, rgba(214, 40, 40, 0.5), rgba(76, 175, 80, 0.5)); /* Fondo gradiente con 50% de opacidad */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Asegura que el contenedor esté centrado verticalmente */
     overflow: hidden;
 }
 
@@ -17,11 +17,12 @@ html, body {
     width: 90%;
     max-width: 480px; /* Tamaño optimizado para pantallas más grandes */
     padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco translúcido */
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco translúcido con opacidad 50% */
     border-radius: 16px; /* Bordes más redondeados */
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Asegura que los elementos dentro del formulario estén centrados */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra más suave */
     transition: all 0.3s ease;
 }
@@ -57,13 +58,14 @@ html, body {
 .login-buttons {
     display: flex;
     flex-direction: column;
+    width: 100%; /* Asegura que los botones no se desborden del contenedor */
 }
 
 /* Botón principal (login) */
 .login-buttons button {
     padding: 1rem;
     font-size: 1.1rem;
-    color: #fff;
+    color: #fff; /* Letras en blanco */
     background: linear-gradient(145deg, #D62828, #B71C1C);
     border: none;
     border-radius: 12px;
@@ -81,12 +83,22 @@ html, body {
 
 /* Botón para registrarse */
 .login-buttons .register-btn {
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: #fff; /* Letras en blanco */
     background: linear-gradient(145deg, #3F51B5, #303F9F); /* Azul para registro */
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.4);
 }
 
 /* Hover en el botón de registro */
 .login-buttons .register-btn:hover {
     background: #283593;
+    color: #fff; /* Asegurarse de que el texto sigue siendo blanco en hover */
 }
 
 /* Agregar un toque final al contenedor */
