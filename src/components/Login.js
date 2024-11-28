@@ -10,8 +10,13 @@ function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        // Simulación de consulta de usuario (esto será reemplazado con una base de datos)
-        const users = JSON.parse(localStorage.getItem('users')) || [];
+        // Simulación de usuarios (sin validaciones)
+        const users = [
+            { email: 'admin@ejemplo.com', password: 'admin123', role: 'admin' },
+            { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente' },
+            { email: 'odontologo@ejemplo.com', password: 'odontologo123', role: 'odontologo' }
+        ];
+
         const user = users.find(u => u.email === email && u.password === password);
 
         if (user) {
@@ -46,14 +51,12 @@ function Login() {
                     placeholder="Correo electrónico"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                 />
                 <input
                     type="password"
                     placeholder="Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
                 />
                 <div className="login-buttons">
                     <button type="submit">Iniciar Sesión</button>
