@@ -1,74 +1,95 @@
-/* src/styles/components/MenuPaciente.css */
-
+/* Establece la caja de modelo global para mejorar el diseño */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Fondo y estilo global de la página */
 body, html {
     height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f3f5; /* Color de fondo suave */
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
+/* Contenedor principal del menú del paciente */
 .menu-paciente-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
-    width: 80%;
+    width: 85%;
     max-width: 1200px;
     min-height: 80vh;
     background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease-in-out;
+    margin: auto; /* Centra el contenedor en el eje horizontal */
 }
 
-.menu-paciente, .citas-programadas {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 30px;
-    width: 45%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+/* Efecto de hover para el contenedor */
+.menu-paciente-container:hover {
+    transform: scale(1.02);
 }
 
+/* Estilo del menú de navegación del paciente */
 .menu-paciente {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    width: 48%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
     text-align: center;
 }
 
-.menu-paciente h1 {
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    color: #333;
+.menu-paciente:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+.menu-paciente h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo de los botones dentro del menú */
 .menu-paciente button {
     width: 100%;
     margin: 10px 0;
     padding: 15px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .menu-paciente button:hover {
     background-color: #0056b3;
-    transform: scale(1.02);
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilo de las citas programadas */
 .citas-programadas {
+    width: 48%;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
 
@@ -77,55 +98,62 @@ body, html {
     color: #333;
     margin-bottom: 20px;
     text-align: center;
+    font-weight: bold;
 }
 
+/* Listado de citas programadas */
 .citas-programadas ul {
     list-style-type: none;
     padding: 0;
 }
 
 .citas-programadas li {
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     padding: 20px;
     margin: 15px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .citas-programadas li:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilo de texto dentro de las citas */
 .citas-programadas li p {
     margin: 5px 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #555;
 }
 
+/* Estilo de los botones de cada cita */
 .citas-programadas li button {
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 10px 15px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border: none;
     border-radius: 8px;
     background-color: #dc3545;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
+    transition: all 0.3s ease;
 }
 
 .citas-programadas li button:hover {
     background-color: #c82333;
     transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsividad para pantallas pequeñas */
+/* Estilo para pantallas pequeñas */
 @media (max-width: 768px) {
     .menu-paciente-container {
         flex-direction: column;
         width: 95%;
         padding: 10px;
+        margin: 20px auto; /* Centra el contenedor en pantallas pequeñas */
     }
 
     .menu-paciente, .citas-programadas {
