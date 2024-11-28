@@ -1,71 +1,123 @@
 /* src/styles/components/AgendarCita.css */
 
+/* Configuración base para el fondo y la fuente */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
+    font-family: 'Poppins', sans-serif; /* Fuente consistente con login.css */
+    background: linear-gradient(45deg, rgba(214, 40, 40, 0.5), rgba(76, 175, 80, 0.5)); /* Fondo gradiente con 50% de opacidad */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
+/* Contenedor principal */
 .container {
     width: 90%;
-    max-width: 500px;
-    background-color: #ffffff;
-    padding: 20px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Reducir el tamaño máximo */
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco translúcido con opacidad 50% */
+    padding: 20px 30px; /* Menos padding para que el contenedor sea más compacto */
+    border-radius: 12px; /* Bordes más pequeños */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     text-align: center;
     margin: 20px;
 }
 
+/* Título principal */
 h1 {
-    font-size: 2rem;
+    font-size: 1.8rem; /* Tamaño de fuente más pequeño */
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
 }
 
+/* Estilo para los inputs, select y textarea */
 form input,
 form select,
 form textarea,
 form button {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 12px; /* Menos padding */
+    margin: 8px 0; /* Menor margen entre los elementos */
     font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 10px; /* Bordes más redondeados */
+    border: 1px solid #ddd;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.5); /* Sombra interna */
+    outline: none;
+    transition: all 0.3s ease;
 }
 
+/* Estilo para el textarea */
 form textarea {
     resize: none;
+    height: 120px; /* Ajuste de altura */
 }
 
+/* Estilo para el select */
 form select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
+/* Estilo de focus en los inputs y select */
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #D62828; /* Rojo */
+    box-shadow: 0 0 8px rgba(214, 40, 40, 0.8);
+}
+
+/* Botones */
 button[type="submit"] {
-    background-color: #00796b;
+    background: linear-gradient(145deg, #D62828, #B71C1C); /* Rojo */
     color: #fff;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.4);
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 10px;
 }
 
+/* Botón para cancelar o realizar otra acción */
 button[type="button"] {
     background-color: #ccc;
     color: #333;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 10px;
 }
 
+/* Hover en los botones */
 button:hover {
-    background-color: #004d40;
+    background-color: #C82333; /* Rojo más oscuro */
+    transform: scale(1.05); /* Efecto de agrandado */
+}
+
+/* Hover en el botón tipo "button" */
+button[type="button"]:hover {
+    background-color: #B0B0B0; /* Gris más oscuro */
+}
+
+/* Agregar un toque final al contenedor */
+.container:hover {
+    transform: translateY(-5px); /* Levanta ligeramente el formulario */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación de carga */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-in-out;
 }

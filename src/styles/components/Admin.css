@@ -1,51 +1,91 @@
-/* src/styles/Login.css */
-
-.login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* Configuración base para el fondo y la fuente */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Fuente más moderna */
+    background: linear-gradient(45deg, rgba(214, 40, 40, 0.5), rgba(76, 175, 80, 0.5)); /* Fondo gradiente con 50% de opacidad */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Asegura que el contenedor esté centrado verticalmente */
+    overflow: hidden;
 }
 
-.login-container h1 {
-    font-size: 24px;
+/* Contenedor principal del panel de administrador */
+.admin-container {
+    width: 90%;
+    max-width: 480px; /* Tamaño optimizado para pantallas más grandes */
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco translúcido con opacidad 50% */
+    border-radius: 16px; /* Bordes más redondeados */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Asegura que los elementos dentro del formulario estén centrados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+    transition: all 0.3s ease;
+}
+
+/* Título del panel de administración */
+.admin-container h1 {
+    margin-bottom: 1.5rem;
     color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.login-container input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+/* Estilo para los inputs */
+.admin-container input {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    outline: none;
 }
 
-.login-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #00796b;
-    color: white;
+/* Estilo de focus en los inputs */
+.admin-container input:focus {
+    border-color: #D62828;
+    box-shadow: 0 0 8px rgba(214, 40, 40, 0.8);
+}
+
+/* Estilo para el botón de agregar odontólogo */
+.admin-container button {
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: #fff; /* Letras en blanco */
+    background: linear-gradient(145deg, #D62828, #B71C1C); /* Rojo similar al login */
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
+    margin-top: 1rem;
     cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.4);
 }
 
-.login-container button:hover {
-    background-color: #004d40;
+/* Hover en el botón */
+.admin-container button:hover {
+    background: #C82333;
+    transform: scale(1.05);
 }
 
-.admin-login {
-    font-size: 0.8rem;
-    color: #00796b;
-    margin-top: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: underline;
+/* Estilo final al contenedor */
+.admin-container:hover {
+    transform: translateY(-5px); /* Levanta ligeramente el formulario */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación de carga */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.admin-container {
+    animation: fadeIn 0.5s ease-in-out;
 }
