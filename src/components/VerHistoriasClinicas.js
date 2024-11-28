@@ -1,6 +1,5 @@
 // src/components/VerHistoriasClinicas.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/VerHistoriasClinicas.css';
 
@@ -9,51 +8,16 @@ function VerHistoriasClinicas() {
     const [mensaje, setMensaje] = useState('');
     const navigate = useNavigate();
 
-    const cargarJSON = () => {
-        fetch('/historiasClinicas.json')
-            .then((response) => {
-                if (!response.ok) throw new Error('Error al cargar los datos desde JSON');
-                return response.json();
-            })
-            .then((data) => {
-                setHistorias(data);
-                setMensaje('Historias cargadas desde JSON');
-            })
-            .catch((error) => {
-                console.error("Error al cargar historias clínicas desde JSON:", error);
-                setMensaje("No se pudieron cargar las historias clínicas desde JSON.");
-            });
-    };
-
-    const cargarXML = () => {
-        fetch('/historiasClinicas.xml')
-            .then((response) => response.text())
-            .then((data) => {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, "application/xml");
-                const historiasArray = Array.from(xml.getElementsByTagName("historiaClinica")).map(historia => ({
-                    cedula: historia.getElementsByTagName("cedula")[0].textContent,
-                    tipoSangre: historia.getElementsByTagName("tipoSangre")[0].textContent,
-                    motivoConsulta: historia.getElementsByTagName("motivoConsulta")[0].textContent,
-                    enfermedadActual: historia.getElementsByTagName("enfermedadActual")[0].textContent,
-                    antecedentesPatoPersonales: historia.getElementsByTagName("antecedentesPatoPersonales")[0].textContent,
-                    constantesVitales: historia.getElementsByTagName("constantesVitales")[0].textContent,
-                    sistemaEstomatognatico: historia.getElementsByTagName("sistemaEstomatognatico")[0].textContent,
-                    odontograma: historia.getElementsByTagName("odontograma")[0].textContent,
-                    indicadoresSaludBucal: historia.getElementsByTagName("indicadoresSaludBucal")[0].textContent,
-                    indicesCPO: historia.getElementsByTagName("indicesCPO")[0].textContent,
-                    diagnostico: historia.getElementsByTagName("diagnostico")[0].textContent,
-                    procedimientos: historia.getElementsByTagName("procedimientos")[0].textContent,
-                    evolucion: historia.getElementsByTagName("evolucion")[0].textContent
-                }));
-                setHistorias(historiasArray);
-                setMensaje('Historias cargadas desde XML');
-            })
-            .catch((error) => {
-                console.error("Error al cargar historias clínicas desde XML:", error);
-                setMensaje("No se pudieron cargar las historias clínicas desde XML.");
-            });
-    };
+    useEffect(() => {
+        // Al cargar el componente, intentamos obtener las historias desde el localStorage
+        const historiasGuardadas = JSON.parse(localStorage.getItem('historiasClinicas'));
+        if (historiasGuardadas) {
+            setHistorias(historiasGuardadas);
+            setMensaje('Historias clínicas cargadas desde el almacenamiento local');
+        } else {
+            setMensaje('No hay historias clínicas disponibles.');
+        }
+    }, []);
 
     const volverAlMenu = () => {
         const rol = sessionStorage.getItem('usuarioRol');
@@ -73,8 +37,6 @@ function VerHistoriasClinicas() {
             <h1>Historias Clínicas</h1>
             {mensaje && <p className="mensaje">{mensaje}</p>}
             <div className="button-group">
-                <button onClick={cargarJSON}>Cargar desde JSON</button>
-                <button onClick={cargarXML}>Cargar desde XML</button>
                 <button onClick={volverAlMenu} className="volver-button">Volver al Menú</button>
             </div>
             {historias.length === 0 && !mensaje ? (

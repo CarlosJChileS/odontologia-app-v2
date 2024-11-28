@@ -52,6 +52,17 @@ function AgendarCita() {
         setDescripcion('');
     };
 
+    const generarHoras = () => {
+        const horas = [];
+        for (let h = 8; h < 20; h++) { // Desde las 08:00 hasta las 19:30
+            let horaFormato = `${h < 10 ? '0' + h : h}:00`;
+            horas.push(horaFormato);
+            horaFormato = `${h < 10 ? '0' + h : h}:30`;
+            horas.push(horaFormato);
+        }
+        return horas;
+    };
+
     return (
         <div className="container" id="agendarCita">
             <h1>Agendar Cita</h1>
@@ -73,21 +84,32 @@ function AgendarCita() {
                     onChange={(e) => setFecha(e.target.value)}
                     required
                 />
-                <input
-                    type="time"
+                <select
                     name="hora"
                     value={hora}
                     onChange={(e) => setHora(e.target.value)}
                     required
-                />
-                <input
-                    type="text"
+                >
+                    <option value="">Seleccionar Hora</option>
+                    {generarHoras().map((horaOption, index) => (
+                        <option key={index} value={horaOption}>
+                            {horaOption}
+                        </option>
+                    ))}
+                </select>
+                <select
                     name="ubicacion"
-                    placeholder="Ubicación"
                     value={ubicacion}
                     onChange={(e) => setUbicacion(e.target.value)}
                     required
-                />
+                >
+                    <option value="">Seleccionar Ubicación</option>
+                    <option value="Manta">Manta</option>
+                    <option value="Tosagua">Tosagua</option>
+                    <option value="El Carmen">El Carmen</option>
+                    <option value="Chone">Chone</option>
+                    <option value="Pedernales">Pedernales</option>
+                </select>
                 <textarea
                     name="descripcion"
                     placeholder="Descripción"
