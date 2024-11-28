@@ -14,13 +14,20 @@ html, body {
 
 /* Contenedor del formulario */
 .login-container {
-    max-width: 720px;
-    width: 100%;
-    padding: rem;
-    border-radius: 50px;
+    width: 90%; /* Ajusta el formulario para que no ocupe todo el ancho */
+    max-width: 500px; /* Limita el máximo tamaño a 500px */
+    height: auto; /* El formulario se ajusta a su contenido */
+    padding: 2rem;
     text-align: center;
+    background: none; /* Elimina el fondo de sobreposición */
+    border-radius: 12px; /* Bordes redondeados suaves */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
+/* Título del formulario */
 .login-container h1 {
     margin-bottom: 1.5rem;
     color: #333;
@@ -29,6 +36,7 @@ html, body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Estilo para los inputs */
 .login-container input {
     margin-bottom: 1rem;
     padding: 0.75rem;
@@ -39,12 +47,14 @@ html, body {
     transition: all 0.3s ease;
 }
 
+/* Estilo para los inputs en foco */
 .login-container input:focus {
     outline: none;
     border-color: #D62828;
     box-shadow: 0 0 8px rgba(214, 40, 40, 0.8);
 }
 
+/* Estilo para los botones */
 .login-buttons {
     display: flex;
     flex-direction: column;
@@ -63,11 +73,13 @@ html, body {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), -2px -2px 4px rgba(255, 255, 255, 0.4);
 }
 
+/* Efecto hover en los botones */
 .login-buttons button:hover {
     background: #C82333;
     transform: scale(1.05);
 }
 
+/* Estilo para el botón de registro */
 .login-buttons .register-btn {
     background: linear-gradient(145deg, #3F51B5, #303F9F); /* Azul para registro */
 }
