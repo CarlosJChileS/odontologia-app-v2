@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/components/HistoriasClinicas.css';
 
 function HistoriasClinicas() {
+    const { citaId } = useParams();  // Obtener el ID de la cita a la que se vinculará la historia clínica
+    const navigate = useNavigate();
+
     const [historiasClinicas, setHistoriasClinicas] = useState([]);
     const [historia, setHistoria] = useState({
         cedula: '',
@@ -24,7 +28,13 @@ function HistoriasClinicas() {
         // Cargar las historias clínicas desde localStorage
         const storedHistorias = JSON.parse(localStorage.getItem('historiasClinicas')) || [];
         setHistoriasClinicas(storedHistorias);
-    }, []);
+
+        // Verificar si la cita ya tiene una historia clínica asociada
+        const historiaExistente = storedHistorias.find(h => h.citaId === citaId);
+        if (historiaExistente) {
+            setHistoria(historiaExistente);  // Si existe, cargarla para editar
+        }
+    }, [citaId]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -43,8 +53,8 @@ function HistoriasClinicas() {
             return;
         }
 
-        // Crear la nueva historia clínica con un ID único
-        const nuevaHistoria = { ...historia, idHistoriaClinica: Date.now() };
+        // Crear la nueva historia clínica con un ID único si no existe
+        const nuevaHistoria = { ...historia, citaId, idHistoriaClinica: Date.now() };
         const updatedHistorias = [...historiasClinicas, nuevaHistoria];
         setHistoriasClinicas(updatedHistorias);
 
@@ -69,41 +79,15 @@ function HistoriasClinicas() {
         });
         setMensaje("Historia clínica guardada exitosamente");
 
-        // Exportar a XML la nueva historia clínica guardada
-        exportarHistoriaClinicaXML(nuevaHistoria);
-    };
-
-    const exportarHistoriaClinicaXML = (historia) => {
-        const xmlString = `
-            <historiaClinica>
-                <cedula>${historia.cedula}</cedula>
-                <tipoSangre>${historia.tipoSangre}</tipoSangre>
-                <motivoConsulta>${historia.motivoConsulta}</motivoConsulta>
-                <enfermedadActual>${historia.enfermedadActual}</enfermedadActual>
-                <antecedentesPatoPersonales>${historia.antecedentesPatoPersonales}</antecedentesPatoPersonales>
-                <constantesVitales>${historia.constantesVitales}</constantesVitales>
-                <sistemaEstomatognatico>${historia.sistemaEstomatognatico}</sistemaEstomatognatico>
-                <odontograma>${historia.odontograma}</odontograma>
-                <indicadoresSaludBucal>${historia.indicadoresSaludBucal}</indicadoresSaludBucal>
-                <indicesCPO>${historia.indicesCPO}</indicesCPO>
-                <diagnostico>${historia.diagnostico}</diagnostico>
-                <procedimientos>${historia.procedimientos}</procedimientos>
-                <evolucion>${historia.evolucion}</evolucion>
-            </historiaClinica>
-        `;
-
-        const blob = new Blob([xmlString], { type: 'application/xml' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `HistoriaClinica_${historia.cedula}.xml`;
-        link.click();
+        // Redirigir al paciente o odontólogo
+        navigate('/menu-paciente'); // O a cualquier otra ruta que desees
     };
 
     return (
         <div className="container">
             <h1>Historia Clínica</h1>
             {mensaje && <p className="mensaje">{mensaje}</p>}
-            
+
             <form onSubmit={guardarHistoriaClinica}>
                 <input
                     type="text"
