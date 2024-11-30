@@ -1,5 +1,3 @@
-// src/components/MenuAdministrador.js
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/MenuAdministrador.css';
@@ -9,6 +7,7 @@ function MenuAdministrador() {
 
     const logout = () => {
         sessionStorage.clear();
+        localStorage.removeItem('user');  // Limpiamos el almacenamiento local
         navigate('/login');
     };
 

@@ -1,4 +1,3 @@
-// src/components/AgendarCita.js
 import React, { useState } from 'react';
 import { useRoleRedirect } from '../helpers/redirectByRole';
 import '../styles/components/AgendarCita.css';
@@ -17,6 +16,13 @@ function AgendarCita() {
         }
     };
 
+    const validarSoloLetras = (event) => {
+        const regex = /^[A-Za-z\s]+$/;
+        if (!regex.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete') {
+            event.preventDefault();
+        }
+    };
+
     const guardarCita = (event) => {
         event.preventDefault();
 
@@ -25,24 +31,24 @@ function AgendarCita() {
             return;
         }
 
+        const confirmarAgregar = window.confirm("¿Deseas agregar esta cita?");
+        if (!confirmarAgregar) return;
+
         const nuevaCita = {
             cedula,
             fecha,
             hora,
             ubicacion,
             descripcion,
-            idCita: Date.now(),
+            id: Date.now(),
         };
 
-        let citasPorPaciente = JSON.parse(localStorage.getItem('citasPorPaciente')) || {};
+        // Cargar las citas desde localStorage
+        let citas = JSON.parse(localStorage.getItem('citas')) || [];
+        citas.push(nuevaCita);
 
-        if (!citasPorPaciente[cedula]) {
-            citasPorPaciente[cedula] = [];
-        }
-
-        citasPorPaciente[cedula].push(nuevaCita);
-
-        localStorage.setItem('citasPorPaciente', JSON.stringify(citasPorPaciente));
+        // Guardar las citas en localStorage
+        localStorage.setItem('citas', JSON.stringify(citas));
 
         alert('Cita guardada con éxito');
         setCedula('');
@@ -116,6 +122,7 @@ function AgendarCita() {
                     rows="4"
                     value={descripcion}
                     onChange={(e) => setDescripcion(e.target.value)}
+                    onKeyPress={validarSoloLetras}
                     required
                 ></textarea>
                 <button type="submit">Guardar Cita</button>

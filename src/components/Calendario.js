@@ -1,4 +1,3 @@
-// src/components/Calendario.js
 import React, { useEffect, useRef, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -14,21 +13,18 @@ function Calendario() {
     const goBackToMenu = useRoleRedirect();
 
     useEffect(() => {
-        fetch('/citas.json')
-            .then(response => response.json())
-            .then(data => {
-                const eventosCitas = data.map(cita => ({
-                    id: cita.idCita,
-                    title: `Cédula: ${cita.cedula}`,
-                    start: `${cita.fecha}T${cita.hora}`,
-                    extendedProps: {
-                        descripcion: cita.descripcion,
-                        ubicacion: cita.ubicacion,
-                    },
-                }));
-                setEventos(eventosCitas);
-            })
-            .catch(error => console.error("Error al cargar citas desde JSON:", error));
+        // Cargar las citas desde localStorage
+        const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
+        const eventosCitas = storedCitas.map(cita => ({
+            id: cita.id,
+            title: `Cédula: ${cita.cedula}`,
+            start: `${cita.fecha}T${cita.hora}`,
+            extendedProps: {
+                descripcion: cita.descripcion,
+                ubicacion: cita.ubicacion,
+            },
+        }));
+        setEventos(eventosCitas);
     }, []);
 
     const handleEventClick = (info) => {
@@ -42,7 +38,11 @@ function Calendario() {
     };
 
     const eliminarCita = (idCita) => {
-        console.log(`Eliminaría la cita con ID: ${idCita}`);
+        // Eliminar la cita de localStorage
+        let citas = JSON.parse(localStorage.getItem('citas')) || [];
+        citas = citas.filter(cita => cita.id !== idCita);
+        localStorage.setItem('citas', JSON.stringify(citas));
+
         alert("Cita eliminada con éxito");
     };
 

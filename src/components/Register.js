@@ -1,5 +1,3 @@
-// src/components/Register.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
@@ -12,7 +10,20 @@ function Register() {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        // Aquí guarda el nuevo usuario en localStorage o en un servicio de backend
+        // Validación de correo
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+            alert("Por favor, ingresa un correo electrónico válido.");
+            return;
+        }
+
+        // Validación de contraseña (mínimo 6 caracteres)
+        if (password.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres.");
+            return;
+        }
+
+        // Guardar nuevo usuario en localStorage
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users.push({ email, password, role: 'paciente' });
         localStorage.setItem('users', JSON.stringify(users));

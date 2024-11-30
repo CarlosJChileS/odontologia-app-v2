@@ -1,27 +1,44 @@
-// src/components/GestionarPacientes.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/components/GestionarPacientes.css';
 
 function GestionarPacientes() {
     const [pacientes, setPacientes] = useState([]);
-    
-    // Simulación de agregar y eliminar pacientes
-    const agregarPaciente = () => {
-        // Lógica para agregar un paciente
-        alert('Paciente agregado (simulación)');
+
+    useEffect(() => {
+        // Cargar pacientes desde localStorage
+        const storedPacientes = JSON.parse(localStorage.getItem('pacientes')) || [];
+        setPacientes(storedPacientes);
+    }, []);
+
+    const agregarPaciente = (nombre) => {
+        // Crear un nuevo paciente
+        const nuevoPaciente = { id: Date.now(), nombre };
+
+        // Actualizar la lista de pacientes
+        const updatedPacientes = [...pacientes, nuevoPaciente];
+        setPacientes(updatedPacientes);
+
+        // Guardar la lista actualizada en localStorage
+        localStorage.setItem('pacientes', JSON.stringify(updatedPacientes));
+
+        alert('Paciente agregado');
     };
-    
+
     const eliminarPaciente = (id) => {
-        // Lógica para eliminar un paciente
-        setPacientes(pacientes.filter(paciente => paciente.id !== id));
-        alert('Paciente eliminado (simulación)');
+        // Eliminar un paciente de la lista
+        const updatedPacientes = pacientes.filter(paciente => paciente.id !== id);
+        setPacientes(updatedPacientes);
+
+        // Guardar la lista actualizada en localStorage
+        localStorage.setItem('pacientes', JSON.stringify(updatedPacientes));
+
+        alert('Paciente eliminado');
     };
 
     return (
         <div className="gestionar-pacientes-container">
             <h1>Gestionar Pacientes</h1>
-            <button onClick={agregarPaciente}>Agregar Paciente</button>
+            <button onClick={() => agregarPaciente('Nuevo Paciente')}>Agregar Paciente</button>
             <ul>
                 {pacientes.map(paciente => (
                     <li key={paciente.id}>

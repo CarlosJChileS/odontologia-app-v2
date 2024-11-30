@@ -1,5 +1,3 @@
-// src/components/HistoriasClinicas.js
-
 import React, { useState, useEffect } from 'react';
 import '../styles/components/HistoriasClinicas.css';
 
@@ -7,7 +5,7 @@ function HistoriasClinicas() {
     const [historiasClinicas, setHistoriasClinicas] = useState([]);
     const [historia, setHistoria] = useState({
         cedula: '',
-        tipoSangre: '', // El paciente ingresa su tipo de sangre aquí
+        tipoSangre: '',
         motivoConsulta: '',
         enfermedadActual: '',
         antecedentesPatoPersonales: '',
@@ -23,11 +21,9 @@ function HistoriasClinicas() {
     const [mensaje, setMensaje] = useState('');
 
     useEffect(() => {
-        // Cargar las historias clínicas desde un archivo JSON ubicado en `public`
-        fetch('/historiasClinicas.json')
-            .then((response) => response.json())
-            .then((data) => setHistoriasClinicas(data))
-            .catch((error) => console.error("Error al cargar historias clínicas:", error));
+        // Cargar las historias clínicas desde localStorage
+        const storedHistorias = JSON.parse(localStorage.getItem('historiasClinicas')) || [];
+        setHistoriasClinicas(storedHistorias);
     }, []);
 
     const handleInputChange = (e) => {
@@ -49,7 +45,11 @@ function HistoriasClinicas() {
 
         // Crear la nueva historia clínica con un ID único
         const nuevaHistoria = { ...historia, idHistoriaClinica: Date.now() };
-        setHistoriasClinicas([...historiasClinicas, nuevaHistoria]);
+        const updatedHistorias = [...historiasClinicas, nuevaHistoria];
+        setHistoriasClinicas(updatedHistorias);
+
+        // Guardar en localStorage
+        localStorage.setItem('historiasClinicas', JSON.stringify(updatedHistorias));
 
         // Limpiar el formulario
         setHistoria({

@@ -1,5 +1,3 @@
-// src/components/MenuPaciente.js
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/MenuPaciente.css';
@@ -9,15 +7,14 @@ function MenuPaciente() {
     const [citas, setCitas] = useState([]);
 
     useEffect(() => {
-        // Simulación de carga de citas desde un JSON local o una API
-        fetch('/citasPaciente.json')
-            .then((response) => response.json())
-            .then((data) => setCitas(data))
-            .catch((error) => console.error('Error al cargar citas:', error));
+        // Cargar citas desde localStorage
+        const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
+        setCitas(storedCitas);
     }, []);
 
     const logout = () => {
         sessionStorage.clear();
+        localStorage.removeItem('user');
         navigate('/login');
     };
 
@@ -29,6 +26,10 @@ function MenuPaciente() {
         if (diferenciaDias >= 2) {
             const nuevasCitas = citas.filter(cita => cita.idCita !== idCita);
             setCitas(nuevasCitas);
+
+            // Guardamos las citas actualizadas en localStorage
+            localStorage.setItem('citas', JSON.stringify(nuevasCitas));
+
             alert('Cita eliminada con éxito');
         } else {
             alert('No puedes eliminar una cita con menos de 2 días de anticipación.');

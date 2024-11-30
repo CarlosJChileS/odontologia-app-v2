@@ -1,5 +1,3 @@
-// src/components/MenuOdontologo.js
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/MenuOdontologo.css';
@@ -9,6 +7,7 @@ function MenuOdontologo() {
 
     const logout = () => {
         sessionStorage.clear();
+        localStorage.removeItem('user');
         navigate('/login');
     };
 

@@ -1,15 +1,27 @@
-// src/components/GestionarCitas.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/components/GestionarCitas.css';
 
 function GestionarCitas() {
     const [citas, setCitas] = useState([]);
-    
-    // Simulación de eliminación de citas
+
+    useEffect(() => {
+        // Cargar las citas desde localStorage
+        const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
+        setCitas(storedCitas);
+    }, []);
+
     const eliminarCita = (id) => {
-        setCitas(citas.filter(cita => cita.id !== id));
-        alert('Cita eliminada (simulación)');
+        const confirmarEliminar = window.confirm('¿Estás seguro de que deseas eliminar esta cita?');
+        
+        if (confirmarEliminar) {
+            const updatedCitas = citas.filter(cita => cita.id !== id);
+            setCitas(updatedCitas);
+
+            // Guardar las citas actualizadas en localStorage
+            localStorage.setItem('citas', JSON.stringify(updatedCitas));
+
+            alert('Cita eliminada');
+        }
     };
 
     return (

@@ -1,4 +1,3 @@
-// src/components/VerHistoriasClinicas.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/VerHistoriasClinicas.css';

@@ -1,5 +1,3 @@
-// src/components/Admin.js
-
 import React, { useState } from 'react';
 
 function Admin() {
@@ -8,6 +6,9 @@ function Admin() {
 
     const addOdontologo = (e) => {
         e.preventDefault();
+
+        const confirmarAgregar = window.confirm("¿Estás seguro de que deseas agregar a este odontólogo?");
+        if (!confirmarAgregar) return;
 
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users.push({ email, password, role: 'odontologo' });

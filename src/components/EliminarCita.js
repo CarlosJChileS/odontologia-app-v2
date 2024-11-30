@@ -1,22 +1,26 @@
-// src/components/EliminarCita.js
-
 import React, { useState, useEffect } from 'react';
 
 function EliminarCita() {
     const [citas, setCitas] = useState([]);
 
     useEffect(() => {
-        // Aquí cargarías las citas desde el backend o desde un estado global
-        // Ejemplo de citas simuladas
-        setCitas([
-            { id: 1, fecha: "2024-12-01", hora: "10:00", paciente: "Juan Perez" },
-            { id: 2, fecha: "2024-12-02", hora: "11:00", paciente: "Maria Lopez" },
-        ]);
+        // Cargar las citas desde localStorage
+        const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
+        setCitas(storedCitas);
     }, []);
 
     const eliminarCita = (id) => {
-        // Lógica para eliminar cita, posiblemente interactuando con el backend
-        setCitas(citas.filter(cita => cita.id !== id));
+        const confirmarEliminar = window.confirm('¿Estás seguro de que deseas eliminar esta cita?');
+        
+        if (confirmarEliminar) {
+            const updatedCitas = citas.filter(cita => cita.id !== id);
+            setCitas(updatedCitas);
+
+            // Guardar las citas actualizadas en localStorage
+            localStorage.setItem('citas', JSON.stringify(updatedCitas));
+
+            alert('Cita eliminada');
+        }
     };
 
     return (
