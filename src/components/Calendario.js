@@ -48,9 +48,14 @@ function Calendario() {
 
     // Eliminar cita de localStorage
     const eliminarCita = (idCita) => {
+        // Recuperar las citas almacenadas en localStorage
         let citas = JSON.parse(localStorage.getItem('citas')) || [];
-        citas = citas.filter(cita => cita.id !== idCita); // Filtramos la cita eliminada
-        localStorage.setItem('citas', JSON.stringify(citas)); // Guardamos las citas actualizadas en localStorage
+
+        // Filtrar la cita eliminada
+        citas = citas.filter(cita => cita.id !== idCita);
+
+        // Guardar las citas actualizadas en localStorage
+        localStorage.setItem('citas', JSON.stringify(citas));
 
         alert("Cita eliminada con éxito");
     };

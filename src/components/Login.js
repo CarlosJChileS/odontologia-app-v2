@@ -1,65 +1,117 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/components/Login.css';
+import '../styles/Login.css';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    // Lista de correos privilegiados
+    const correosPrivilegiados = [
+        { email: 'admin@ejemplo.com', password: 'admin123', role: 'admin' },
+        { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente' },
+        { email: 'odontologo@ejemplo.com', password: 'odontologo123', role: 'odontologo' }
+    ];
 
     useEffect(() => {
         // Si no hay usuarios en localStorage, agregamos algunos de prueba
         if (!localStorage.getItem('usuarios')) {
             const usuariosEjemplo = [
-                { email: 'admin@ejemplo.com', password: 'admin123', role: 'admin' },
-                { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente' },
-                { email: 'odontologo@ejemplo.com', password: 'odontologo123', role: 'odontologo' }
+                { email: 'user1@ejemplo.com', password: 'user123', role: 'paciente' },
+                { email: 'user2@ejemplo.com', password: 'user123', role: 'odontologo' }
             ];
             localStorage.setItem('usuarios', JSON.stringify(usuariosEjemplo));
         }
     }, []);
 
-    const handleLogin = () => {
-        const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
-        const usuario = usuariosGuardados.find(user => user.email === email && user.password === password);
+    const handleLogin = (e) => {
+        e.preventDefault();
 
-        if (usuario) {
-            sessionStorage.setItem('usuario', JSON.stringify(usuario));
-            sessionStorage.setItem('rol', usuario.role);
+        // Primero verificamos si el correo pertenece a los correos privilegiados
+        const userPrivilegiado = correosPrivilegiados.find(
+            (u) => u.email === email && u.password === password
+        );
 
-            if (usuario.role === 'admin') {
-                navigate('/admin-dashboard');
-            } else if (usuario.role === 'odontologo') {
-                navigate('/odontologo-dashboard');
-            } else if (usuario.role === 'paciente') {
-                navigate('/paciente-dashboard');
+        if (userPrivilegiado) {
+            // Guardar el rol del usuario privilegiado en sessionStorage
+            sessionStorage.setItem('usuarioRol', userPrivilegiado.role);
+
+            // Redirigir según el rol del usuario privilegiado
+            switch (userPrivilegiado.role) {
+                case 'admin':
+                    navigate('/menu-administrador');
+                    break;
+                case 'paciente':
+                    navigate('/menu-paciente');
+                    break;
+                case 'odontologo':
+                    navigate('/menu-odontologo');
+                    break;
+                default:
+                    alert('Rol no reconocido. Contacte al administrador.');
+                    break;
+            }
+            return;
+        }
+
+        // Si no es un usuario privilegiado, buscamos en el localStorage
+        const users = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+        // Buscar al usuario en los datos
+        const user = users.find((u) => u.email === email && u.password === password);
+
+        if (user) {
+            // Guardar el rol en sessionStorage
+            sessionStorage.setItem('usuarioRol', user.role);
+
+            // Redirige a la ruta correspondiente según el rol
+            switch (user.role) {
+                case 'admin':
+                    navigate('/menu-administrador');
+                    break;
+                case 'paciente':
+                    navigate('/menu-paciente');
+                    break;
+                case 'odontologo':
+                    navigate('/menu-odontologo');
+                    break;
+                default:
+                    alert('Rol no reconocido. Contacte al administrador.');
+                    break;
             }
         } else {
-            setError('Credenciales incorrectas');
+            alert('Credenciales incorrectas. Intenta de nuevo.');
         }
     };
 
     return (
         <div className="login-container">
             <h1>Iniciar Sesión</h1>
-            {error && <div className="error">{error}</div>}
-
-            <div className="input-container">
+            <form onSubmit={handleLogin}>
                 <input
                     type="email"
+                    placeholder="Correo electrónico"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Correo electrónico"
                 />
                 <input
                     type="password"
+                    placeholder="Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Contraseña"
                 />
-                <button onClick={handleLogin}>Iniciar Sesión</button>
-            </div>
+                <div className="login-buttons">
+                    <button type="submit">Iniciar Sesión</button>
+                    <button
+                        type="button"
+                        className="register-btn"
+                        onClick={() => navigate('/register')}
+                    >
+                        Registrarse
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

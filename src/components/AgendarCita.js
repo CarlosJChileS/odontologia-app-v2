@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRoleRedirect } from '../helpers/redirectByRole';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/components/AgendarCita.css';
 
 function AgendarCita() {
@@ -8,7 +8,9 @@ function AgendarCita() {
     const [hora, setHora] = useState('');
     const [ubicacion, setUbicacion] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const goBackToMenu = useRoleRedirect();
+    const [usuarioRol, setUsuarioRol] = useState(null);
+    const [usuarioCedula, setUsuarioCedula] = useState('');
+    const navigate = useNavigate();
 
     // Validar solo números para la cédula
     const validarSoloNumeros = (event) => {
@@ -24,6 +26,25 @@ function AgendarCita() {
             event.preventDefault();
         }
     };
+
+    // Obtener el rol y cédula del usuario desde el sessionStorage
+    useEffect(() => {
+        const rol = sessionStorage.getItem('usuarioRol');
+        const usuario = JSON.parse(localStorage.getItem('usuarios')).find(u => u.role === rol);
+
+        if (!rol) {
+            // Si no hay rol, redirigimos a login
+            alert('No estás logueado. Inicia sesión primero.');
+            navigate('/login');
+        } else {
+            setUsuarioRol(rol);
+            // Si el rol es paciente, se carga la cédula del paciente automáticamente
+            if (rol === 'paciente' && usuario) {
+                setCedula(usuario.cedula); // Suponemos que la cédula está guardada en el objeto del usuario
+                setUsuarioCedula(usuario.cedula);
+            }
+        }
+    }, [navigate]);
 
     const guardarCita = (event) => {
         event.preventDefault();
@@ -73,10 +94,29 @@ function AgendarCita() {
         return horas;
     };
 
+    // Volver al menú según el rol
+    const volverAlMenu = () => {
+        switch (usuarioRol) {
+            case 'admin':
+                navigate('/menu-administrador');
+                break;
+            case 'paciente':
+                navigate('/menu-paciente');
+                break;
+            case 'odontologo':
+                navigate('/menu-odontologo');
+                break;
+            default:
+                alert('Rol no reconocido. Contacte al administrador.');
+                break;
+        }
+    };
+
     return (
         <div className="container" id="agendarCita">
             <h1>Agendar Cita</h1>
             <form onSubmit={guardarCita}>
+                {/* Cédula: Si el usuario es paciente, se llena automáticamente, si no, puede escribirla */}
                 <input
                     type="text"
                     name="cedula"
@@ -86,7 +126,9 @@ function AgendarCita() {
                     onChange={(e) => setCedula(e.target.value)}
                     onKeyPress={validarSoloNumeros}
                     required
+                    disabled={usuarioRol === 'paciente'} // Desactiva el campo si es paciente
                 />
+
                 <input
                     type="date"
                     name="fecha"
@@ -130,7 +172,7 @@ function AgendarCita() {
                     required
                 ></textarea>
                 <button type="submit">Guardar Cita</button>
-                <button type="button" onClick={goBackToMenu}>Volver al Menú</button>
+                <button type="button" onClick={volverAlMenu}>Volver al Menú</button>
             </form>
         </div>
     );
