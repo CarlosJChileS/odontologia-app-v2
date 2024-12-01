@@ -103,13 +103,6 @@ function Login() {
                 />
                 <div className="login-buttons">
                     <button type="submit">Iniciar Sesión</button>
-                    <button
-                        type="button"
-                        className="register-btn"
-                        onClick={() => navigate('/register')}
-                    >
-                        Registrarse
-                    </button>
                 </div>
             </form>
         </div>

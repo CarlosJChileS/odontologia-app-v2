@@ -1,8 +1,5 @@
-// src/App.js
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
-import Register from './components/Register';
 import MenuAdministrador from './components/MenuAdministrador';
 import MenuPaciente from './components/MenuPaciente';
 import MenuOdontologo from './components/MenuOdontologo';
@@ -21,7 +18,6 @@ function App() {
 
                 {/* Rutas públicas */}
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
 
                 {/* Rutas protegidas para administrador */}
                 <Route 
