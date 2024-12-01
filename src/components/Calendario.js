@@ -12,8 +12,8 @@ function Calendario() {
     const [eventos, setEventos] = useState([]);
     const goBackToMenu = useRoleRedirect();
 
+    // Cargar citas desde localStorage
     useEffect(() => {
-        // Cargar las citas desde localStorage
         const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
         const eventosCitas = storedCitas.map(cita => ({
             id: cita.id,
@@ -27,6 +27,7 @@ function Calendario() {
         setEventos(eventosCitas);
     }, []);
 
+    // Manejar el clic en un evento (cita)
     const handleEventClick = (info) => {
         const detallesCita = `Detalles de la cita:\n\nCédula: ${info.event.title}\nDescripción: ${info.event.extendedProps.descripcion}`;
         const confirmarEliminar = window.confirm(`${detallesCita}\n\n¿Deseas eliminar esta cita?`);
@@ -37,8 +38,8 @@ function Calendario() {
         }
     };
 
+    // Eliminar cita de localStorage
     const eliminarCita = (idCita) => {
-        // Eliminar la cita de localStorage
         let citas = JSON.parse(localStorage.getItem('citas')) || [];
         citas = citas.filter(cita => cita.id !== idCita);
         localStorage.setItem('citas', JSON.stringify(citas));
@@ -63,13 +64,15 @@ function Calendario() {
                 dateClick={(info) => calendarRef.current.getApi().changeView('timeGridDay', info.dateStr)}
                 eventClick={handleEventClick}
                 eventDidMount={(info) => {
+                    // Ajustar el texto para que no se desborde
                     if (info.el && info.el.querySelector('.fc-event-title')) {
                         const titleElement = info.el.querySelector('.fc-event-title');
                         titleElement.style.whiteSpace = 'normal';
                     }
                 }}
             />
-            <button onClick={goBackToMenu}>Volver al Menú</button>
+            {/* Botón para volver al menú */}
+            <button onClick={goBackToMenu} aria-label="Volver al Menú">Volver al Menú</button>
         </div>
     );
 }

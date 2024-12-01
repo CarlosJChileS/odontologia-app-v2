@@ -1,93 +1,96 @@
-/* src/styles/components/Calendario.css */
-
-/* Configuración global */
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(45deg, rgba(214, 40, 40, 0.5), rgba(76, 175, 80, 0.5));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    overflow: hidden;
-}
-
-/* Contenedor principal del calendario */
-.container.calendario-container {
+/* Estilos específicos solo para el contenedor del calendario y sus elementos */
+.calendario-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 90%; /* Ocupa el 90% del ancho disponible */
-    max-width: 900px; /* Limita el tamaño máximo */
-    padding: 10px;
+    max-width: 700px; /* Limita el tamaño máximo */
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin: 20px;
+    margin: 10px;
     overflow: hidden;
+    min-height: 250px; /* Altura mínima */
+    max-height: 500px; /* Limita la altura máxima */
+    animation: fadeIn 0.5s ease-in-out; /* Animación de entrada */
 }
 
 /* Estilos del calendario FullCalendar */
-.fc {
+.calendario-container .fc {
     width: 100%;
-    height: 400px; /* Reducimos la altura a 400px */
-    font-size: 0.75rem; /* Font-size más pequeño para todo el calendario */
+    height: auto;
+    min-height: 220px; /* Altura mínima ajustada */
+    font-size: 0.55rem; /* Tamaño de fuente reducido */
 }
 
 /* Ajustes para los días del calendario */
-.fc .fc-daygrid-day {
+.calendario-container .fc .fc-daygrid-day {
     position: relative;
-    padding: 4px; /* Reducimos el padding de los cuadros de los días */
+    padding: 2px; /* Reducir padding */
+    height: 25px; /* Reducir la altura de las celdas */
 }
 
-.fc .fc-daygrid-day-number {
-    font-size: 0.85rem; /* Ajustamos el tamaño de los números de los días */
+.calendario-container .fc .fc-daygrid-day-number {
+    font-size: 0.6rem; /* Reducir el tamaño de los números */
+    font-weight: bold;
 }
 
-/* Ajuste en el hover de los días */
-.fc .fc-daygrid-day:hover {
+/* Hover para los días */
+.calendario-container .fc .fc-daygrid-day:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para los eventos del calendario */
-.fc .fc-event {
+/* Estilos para los eventos */
+.calendario-container .fc .fc-event {
     background-color: #4CAF50;
     color: white;
-    border-radius: 8px;
-    padding: 4px;
-    font-size: 0.75rem; /* Reducimos el tamaño de los textos dentro de los eventos */
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 3px;
+    font-size: 0.55rem; /* Reducir aún más el tamaño de los eventos */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para los botones de navegación */
-.fc .fc-prev-button,
-.fc .fc-next-button,
-.fc .fc-today-button,
-.fc .fc-dayGridMonth-button,
-.fc .fc-timeGridWeek-button,
-.fc .fc-timeGridDay-button {
-    font-size: 0.7rem; /* Hacemos los botones más pequeños */
-    padding: 4px 8px; /* Reducción de tamaño en los botones */
-    margin: 0 5px; /* Separación más pequeña entre botones */
+/* Estilos de los botones de navegación */
+.calendario-container .fc .fc-prev-button,
+.calendario-container .fc .fc-next-button,
+.calendario-container .fc .fc-today-button,
+.calendario-container .fc .fc-dayGridMonth-button,
+.calendario-container .fc .fc-timeGridWeek-button,
+.calendario-container .fc .fc-timeGridDay-button {
+    font-size: 0.45rem; /* Reducir tamaño de los botones */
+    padding: 6px; /* Botón cuadrado */
+    margin: 0 5px;
+    border-radius: 5px; /* Bordes redondeados */
+    width: 28px; /* Botón más pequeño */
+    height: 28px; /* Igual altura para hacerlo cuadrado */
+    text-align: center; /* Centra el texto dentro del botón */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Estilo del botón de Volver al Menú */
-button {
+.calendario-container button {
     background-color: #D62828;
     color: white;
     border: none;
-    padding: 6px 12px; /* Botón más pequeño */
-    margin-top: 15px;
-    font-size: 0.75rem; /* Fuente más pequeña */
+    padding: 12px 20px; /* Botón más grande */
+    margin-top: 20px;
+    font-size: 1rem; /* Aumentar el tamaño de la fuente */
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: 8px; /* Bordes redondeados */
     transition: background-color 0.3s, transform 0.3s;
+    width: auto; /* Ajuste automático del ancho según el contenido */
+    height: auto; /* Ajuste automático de la altura */
+    text-align: center; /* Centra el texto dentro del botón */
 }
 
-button:hover {
+.calendario-container button:hover {
     background-color: #C82333;
-    transform: scale(1.05);
+    transform: scale(1.05); /* Ligera animación de agrandamiento */
 }
 
 /* Animación de fade-in para el contenedor */
@@ -96,6 +99,79 @@ button:hover {
     100% { opacity: 1; }
 }
 
-.container.calendario-container {
-    animation: fadeIn 0.5s ease-in-out;
+/* Media queries para hacerlo más pequeño y responsivo en pantallas pequeñas */
+@media (max-width: 768px) {
+    .calendario-container {
+        max-width: 100%;
+        min-height: 250px;
+        padding: 15px;
+    }
+
+    .calendario-container .fc {
+        font-size: 0.5rem; /* Reducimos más el tamaño de la fuente */
+        min-height: 180px; /* Altura más pequeña */
+    }
+
+    .calendario-container .fc .fc-daygrid-day {
+        padding: 2px; /* Menos padding */
+        height: 18px; /* Celdas más pequeñas */
+    }
+
+    .calendario-container .fc .fc-daygrid-day-number {
+        font-size: 0.5rem; /* Números más pequeños */
+    }
+
+    /* Reducir el tamaño de los botones de navegación */
+    .calendario-container .fc .fc-prev-button,
+    .calendario-container .fc .fc-next-button,
+    .calendario-container .fc .fc-today-button,
+    .calendario-container .fc .fc-dayGridMonth-button,
+    .calendario-container .fc .fc-timeGridWeek-button,
+    .calendario-container .fc .fc-timeGridDay-button {
+        font-size: 0.4rem;
+        padding: 3px 5px;
+    }
+
+    /* Reducir el tamaño del botón de volver al menú */
+    .calendario-container button {
+        font-size: 0.75rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendario-container {
+        max-width: 100%;
+        padding: 5px;
+    }
+
+    .calendario-container .fc {
+        font-size: 0.45rem; /* Reducimos aún más el tamaño de la fuente */
+        min-height: 150px; /* Altura aún más pequeña */
+    }
+
+    .calendario-container .fc .fc-daygrid-day {
+        padding: 1px;
+        height: 12px; /* Celdas más pequeñas */
+    }
+
+    .calendario-container .fc .fc-daygrid-day-number {
+        font-size: 0.45rem; /* Números aún más pequeños */
+    }
+
+    /* Reducir el tamaño de los botones */
+    .calendario-container .fc .fc-prev-button,
+    .calendario-container .fc .fc-next-button,
+    .calendario-container .fc .fc-today-button,
+    .calendario-container .fc .fc-dayGridMonth-button,
+    .calendario-container .fc .fc-timeGridWeek-button,
+    .calendario-container .fc .fc-timeGridDay-button {
+        font-size: 0.35rem;
+        padding: 2px 4px;
+    }
+
+    .calendario-container button {
+        font-size: 0.65rem;
+        padding: 6px 12px;
+    }
 }

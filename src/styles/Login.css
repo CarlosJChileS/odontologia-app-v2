@@ -4,7 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif; /* Fuente más moderna */
+    font-family: 'Poppins', sans-serif; /* Fuente moderna */
     background: linear-gradient(45deg, rgba(214, 40, 40, 0.5), rgba(76, 175, 80, 0.5)); /* Fondo gradiente con 50% de opacidad */
     display: flex;
     justify-content: center;
@@ -12,12 +12,21 @@ html, body {
     overflow: hidden;
 }
 
+/* Contenedor del formulario de login */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
 /* Contenedor del formulario */
 .login-container {
     width: 90%;
     max-width: 480px; /* Tamaño optimizado para pantallas más grandes */
     padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco translúcido con opacidad 50% */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco translúcido con opacidad 80% */
     border-radius: 16px; /* Bordes más redondeados */
     display: flex;
     flex-direction: column;
@@ -25,6 +34,7 @@ html, body {
     align-items: center; /* Asegura que los elementos dentro del formulario estén centrados */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra más suave */
     transition: all 0.3s ease;
+    animation: fadeIn 0.6s ease-in-out; /* Animación */
 }
 
 /* Título del formulario */
@@ -52,13 +62,15 @@ html, body {
 .login-container input:focus {
     border-color: #D62828;
     box-shadow: 0 0 8px rgba(214, 40, 40, 0.8);
+    outline: 3px solid rgba(214, 40, 40, 0.4); /* Agregar outline para accesibilidad */
 }
 
 /* Estilo para los botones */
 .login-buttons {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Asegura que los botones no se desborden del contenedor */
+    width: 100%;
+    gap: 1rem; /* Espacio entre los botones */
 }
 
 /* Botón principal (login) */
@@ -103,16 +115,26 @@ html, body {
 
 /* Agregar un toque final al contenedor */
 .login-container:hover {
-    transform: translateY(-5px); /* Levanta ligeramente el formulario */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px); /* Levanta ligeramente el formulario */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Animación de carga */
 @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-.login-container {
-    animation: fadeIn 0.5s ease-in-out;
+/* Mejorar la experiencia en pantallas pequeñas */
+@media (max-width: 480px) {
+    .login-container {
+        width: 100%; /* Ajusta a 100% del ancho disponible */
+        padding: 1.5rem; /* Reducir el padding en móviles */
+    }
+    .login-container h1 {
+        font-size: 1.5rem; /* Ajuste en tamaño de fuente */
+    }
+    .login-buttons button {
+        font-size: 1rem; /* Reducir el tamaño del botón en pantallas pequeñas */
+    }
 }

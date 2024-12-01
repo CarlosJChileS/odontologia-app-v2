@@ -20,8 +20,7 @@ function Login() {
         const user = users.find(u => u.email === email && u.password === password);
 
         if (user) {
-            // Usar localStorage para persistir el rol
-            localStorage.setItem('usuarioRol', user.role);
+            sessionStorage.setItem('usuarioRol', user.role);
 
             // Redirigir según el rol
             switch (user.role) {

@@ -7,33 +7,61 @@ function MenuPaciente() {
     const [citas, setCitas] = useState([]);
 
     useEffect(() => {
-        // Cargar las citas desde localStorage
-        const storedCitas = JSON.parse(localStorage.getItem('citasPaciente')) || [];
-        setCitas(storedCitas);
+        // Simulación de carga de citas desde un JSON local o una API
+        fetch('/citasPaciente.json')
+            .then((response) => response.json())
+            .then((data) => setCitas(data))
+            .catch((error) => console.error('Error al cargar citas:', error));
     }, []);
 
-    const verHistoriaClinica = (citaId) => {
-        // Redirigir a la página de historia clínica correspondiente
-        navigate(`/historias-clinicas/${citaId}`);
+    const logout = () => {
+        sessionStorage.clear();
+        navigate('/login');
+    };
+
+    const eliminarCita = (idCita, fechaCita) => {
+        const fechaActual = new Date();
+        const fechaCitaObj = new Date(fechaCita);
+        const diferenciaDias = Math.floor((fechaCitaObj - fechaActual) / (1000 * 60 * 60 * 24));
+
+        if (diferenciaDias >= 2) {
+            const nuevasCitas = citas.filter(cita => cita.idCita !== idCita);
+            setCitas(nuevasCitas);
+            alert('Cita eliminada con éxito');
+        } else {
+            alert('No puedes eliminar una cita con menos de 2 días de anticipación.');
+        }
     };
 
     return (
         <div className="menu-paciente-container">
-            <h1>Menú Paciente</h1>
-            <h3>Citas Programadas</h3>
-            {citas.length === 0 ? (
-                <p>No tienes citas programadas.</p>
-            ) : (
-                <ul>
-                    {citas.map(cita => (
-                        <li key={cita.idCita}>
-                            <p><strong>Fecha de Cita:</strong> {new Date(cita.fecha).toLocaleString()}</p>
-                            <p><strong>Motivo:</strong> {cita.motivo}</p>
-                            <button onClick={() => verHistoriaClinica(cita.idCita)}>Ver/Completar Historia Clínica</button>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <div className="menu-paciente">
+                <h1>Menú Paciente</h1>
+                <button onClick={() => navigate('/agendar-cita')}>Agendar Cita</button>
+                <button onClick={() => navigate('/calendario')}>Ver Calendario de Citas</button>
+                <button onClick={() => navigate('/ver-historias')}>Ver Historias Clínicas</button>
+                <button onClick={logout}>Cerrar Sesión</button>
+            </div>
+
+            <div className="citas-programadas">
+                <h2>Mis Citas</h2>
+                {citas.length > 0 ? (
+                    <ul>
+                        {citas.map((cita) => (
+                            <li key={cita.idCita}>
+                                <p><strong>Fecha:</strong> {cita.fecha}</p>
+                                <p><strong>Hora:</strong> {cita.hora}</p>
+                                <p><strong>Ubicación:</strong> {cita.ubicacion}</p>
+                                <button onClick={() => eliminarCita(cita.idCita, cita.fecha)}>
+                                    Eliminar Cita
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No tienes citas programadas.</p>
+                )}
+            </div>
         </div>
     );
 }

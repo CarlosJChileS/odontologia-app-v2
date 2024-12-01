@@ -1,30 +1,127 @@
-/* src/styles/components/GestionarPacientes.css */
+/* GestionarPacientes.css */
 
+/* Estilo para el contenedor principal */
 .gestionar-pacientes-container {
     padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin: 20px auto;
+    max-width: 700px;
     text-align: center;
 }
 
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #007BFF;
+/* Título */
+.gestionar-pacientes-container h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Estilo para el campo de entrada y el botón */
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.input-container input {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+/* Efecto en el campo de entrada cuando recibe foco */
+.input-container input:focus {
+    border-color: #D62828;
+    outline: none;
+}
+
+/* Estilo para el botón de agregar paciente */
+.input-container button {
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #D62828;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 200px;
 }
 
+/* Estilo del botón cuando está deshabilitado */
+.input-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Efecto en el botón cuando el cursor pasa sobre él */
+.input-container button:hover {
+    background-color: #B71C1C;
+}
+
+/* Estilo para la lista de pacientes */
 ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-li {
+/* Estilo de cada elemento de la lista */
+ul li {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
+    align-items: center;
+    padding: 12px 10px;
+    font-size: 1.1rem;
+    background-color: #f9f9f9;
     border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto al pasar el cursor sobre un paciente */
+ul li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo para los botones de eliminar */
+ul li button {
+    background-color: #C82333;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto al pasar el cursor sobre el botón de eliminar */
+ul li button:hover {
+    background-color: #B71C1C;
+}
+
+/* Estilo para el mensaje de error */
+.error {
+    color: red;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Estilo de los campos de entrada cuando hay un error */
+.input-container input:invalid {
+    border-color: red;
 }

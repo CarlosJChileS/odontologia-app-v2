@@ -1,5 +1,3 @@
-/* src/styles/components/AgendarCita.css */
-
 /* Configuración base para el fondo y la fuente */
 body {
     font-family: 'Poppins', sans-serif; /* Fuente consistente con login.css */
@@ -120,4 +118,68 @@ button[type="button"]:hover {
 
 .container {
     animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Media queries para hacer el diseño responsivo */
+
+/* Dispositivos pequeños */
+@media (max-width: 600px) {
+    /* Ajustar el contenedor a un 90% en dispositivos pequeños */
+    .container {
+        width: 90%;
+        padding: 15px 20px; /* Ajustamos el padding */
+    }
+
+    /* Reducir el tamaño de los inputs y botones */
+    form input,
+    form select,
+    form textarea,
+    form button {
+        font-size: 0.9rem; /* Reducir tamaño de fuente */
+        padding: 10px; /* Menos padding */
+    }
+
+    /* Ajustar el tamaño del título */
+    h1 {
+        font-size: 1.6rem; /* Reducir tamaño de título */
+    }
+
+    /* Ajustar el espacio entre los elementos */
+    form input,
+    form select,
+    form textarea,
+    form button {
+        margin: 6px 0; /* Menor margen */
+    }
+}
+
+/* Dispositivos muy pequeños (móviles en modo retrato) */
+@media (max-width: 480px) {
+    /* Ajustar el contenedor a 100% */
+    .container {
+        width: 100%;
+        padding: 10px 15px; /* Reducir aún más el padding */
+    }
+
+    /* Reducir más los tamaños de los inputs y botones */
+    form input,
+    form select,
+    form textarea,
+    form button {
+        font-size: 0.85rem; /* Aseguramos que los elementos sean pequeños y legibles */
+        padding: 8px; /* Reducir padding aún más */
+    }
+
+    /* Ajustar el tamaño del título */
+    h1 {
+        font-size: 1.4rem; /* Asegurar que el título sea más pequeño */
+    }
+
+    /* Ajustar espacio entre elementos */
+    form input,
+    form select,
+    form textarea,
+    form button {
+        margin: 5px 0; /* Reducir márgenes */
+    }
 }
