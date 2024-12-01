@@ -8,7 +8,7 @@ import { useRoleRedirect } from '../helpers/redirectByRole';
 import '../styles/components/Calendario.css';
 
 function Calendario() {
-    const calendarRef = useRef(null);
+    const calendarRef = useRef(null);  // Usamos el ref para interactuar directamente con FullCalendar
     const [eventos, setEventos] = useState([]);
     const goBackToMenu = useRoleRedirect();
 
@@ -33,16 +33,25 @@ function Calendario() {
         const confirmarEliminar = window.confirm(`${detallesCita}\n\n¿Deseas eliminar esta cita?`);
 
         if (confirmarEliminar) {
-            eliminarCita(info.event.id);
-            setEventos(eventos.filter(evento => evento.id !== info.event.id));
+            eliminarCita(info.event.id); // Eliminar cita del localStorage
+
+            // Filtramos el evento del calendario y actualizamos el estado
+            setEventos((prevEventos) => {
+                // Filtramos los eventos para excluir el evento eliminado
+                return prevEventos.filter(evento => evento.id !== info.event.id);
+            });
+
+            // Actualizamos FullCalendar para reflejar la eliminación
+            const calendarApi = calendarRef.current.getApi();
+            calendarApi.refetchEvents(); // Forzamos a FullCalendar a recargar los eventos
         }
     };
 
     // Eliminar cita de localStorage
     const eliminarCita = (idCita) => {
         let citas = JSON.parse(localStorage.getItem('citas')) || [];
-        citas = citas.filter(cita => cita.id !== idCita);
-        localStorage.setItem('citas', JSON.stringify(citas));
+        citas = citas.filter(cita => cita.id !== idCita); // Filtramos la cita eliminada
+        localStorage.setItem('citas', JSON.stringify(citas)); // Guardamos las citas actualizadas en localStorage
 
         alert("Cita eliminada con éxito");
     };
@@ -60,11 +69,11 @@ function Calendario() {
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay',
                 }}
-                events={eventos}
+                events={eventos} // Pasamos los eventos al FullCalendar
                 dateClick={(info) => calendarRef.current.getApi().changeView('timeGridDay', info.dateStr)}
-                eventClick={handleEventClick}
+                eventClick={handleEventClick} // Definimos el comportamiento al hacer clic en un evento
                 eventDidMount={(info) => {
-                    // Ajustar el texto para que no se desborde
+                    // Ajustamos el texto del evento para que no se desborde
                     if (info.el && info.el.querySelector('.fc-event-title')) {
                         const titleElement = info.el.querySelector('.fc-event-title');
                         titleElement.style.whiteSpace = 'normal';

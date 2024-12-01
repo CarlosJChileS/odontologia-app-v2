@@ -4,6 +4,7 @@ import '../styles/components/GestionarPacientes.css';
 function GestionarPacientes() {
     const [pacientes, setPacientes] = useState([]);
     const [nombre, setNombre] = useState('');
+    const [cedula, setCedula] = useState(''); // Campo para la cédula
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,7 @@ function GestionarPacientes() {
     }, []);
 
     const agregarPaciente = () => {
-        if (!nombre.trim() || !email.trim() || !password.trim()) {
+        if (!nombre.trim() || !cedula.trim() || !email.trim() || !password.trim()) {
             alert('Por favor ingresa todos los datos del paciente.');
             return;
         }
@@ -29,9 +30,11 @@ function GestionarPacientes() {
         const nuevoPaciente = { 
             id: Date.now(), 
             nombre, 
+            cedula, // Asociamos la cédula
             email, 
             password,
-            role: 'paciente'  // Asignamos el rol 'paciente' por defecto
+            role: 'paciente',  // Asignamos el rol 'paciente' por defecto
+            showPassword: false // Inicializamos la contraseña como oculta
         };
 
         const updatedPacientes = [...pacientes, nuevoPaciente];
@@ -52,6 +55,7 @@ function GestionarPacientes() {
 
         // Limpiar los campos de entrada
         setNombre('');
+        setCedula('');
         setEmail('');
         setPassword('');
 
@@ -97,6 +101,13 @@ function GestionarPacientes() {
                     aria-label="Nombre del paciente"
                 />
                 <input
+                    type="text"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
+                    placeholder="Cédula del paciente"
+                    aria-label="Cédula del paciente"
+                />
+                <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -118,7 +129,7 @@ function GestionarPacientes() {
                     />
                     Ver contraseña
                 </label>
-                <button onClick={agregarPaciente} disabled={!nombre.trim() || !email.trim() || !password.trim()}>
+                <button onClick={agregarPaciente} disabled={!nombre.trim() || !cedula.trim() || !email.trim() || !password.trim()}>
                     Agregar Paciente
                 </button>
             </div>
@@ -132,6 +143,7 @@ function GestionarPacientes() {
                         <li key={paciente.id} className="paciente-item">
                             <div className="paciente-info">
                                 <span className="paciente-nombre">{paciente.nombre}</span>
+                                <span className="paciente-cedula">{paciente.cedula}</span> {/* Mostrar la cédula */}
                                 <span className="paciente-email">{paciente.email}</span>
                                 <span className="paciente-role">{`Rol: ${paciente.role}`}</span> {/* Mostrar el rol */}
                                 <button onClick={() => eliminarPaciente(paciente.id)} className="eliminar-btn">

@@ -74,6 +74,7 @@ function AgendarCita() {
         <div className="container" id="agendarCita">
             <h1>Agendar Cita</h1>
             <form onSubmit={guardarCita}>
+                {/* Campo para ingresar la cédula */}
                 <input
                     type="text"
                     name="cedula"

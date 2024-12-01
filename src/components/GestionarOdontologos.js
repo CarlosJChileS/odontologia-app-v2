@@ -4,6 +4,7 @@ import '../styles/components/GestionarOdontologos.css';
 function GestionarOdontologos() {
     const [odontologos, setOdontologos] = useState([]);
     const [nombre, setNombre] = useState('');
+    const [cedula, setCedula] = useState('');  // Campo para la cédula
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -21,8 +22,8 @@ function GestionarOdontologos() {
     }, []);
 
     const agregarOdontologo = () => {
-        if (!nombre.trim() || !email.trim() || !password.trim()) {
-            alert('Por favor ingresa todos los datos (nombre, correo, contraseña).');
+        if (!nombre.trim() || !cedula.trim() || !email.trim() || !password.trim()) {
+            alert('Por favor ingresa todos los datos (nombre, cédula, correo, contraseña).');
             return;
         }
 
@@ -30,6 +31,7 @@ function GestionarOdontologos() {
         const nuevoOdontologo = { 
             id: Date.now(), 
             nombre, 
+            cedula, // Asociamos la cédula
             email, 
             password,
             role: 'odontologo'  // Asignamos el rol 'odontologo' por defecto
@@ -54,6 +56,7 @@ function GestionarOdontologos() {
 
         // Limpiar los campos de entrada
         setNombre('');
+        setCedula('');
         setEmail('');
         setPassword('');
 
@@ -102,6 +105,13 @@ function GestionarOdontologos() {
                     aria-label="Nombre del odontólogo"
                 />
                 <input
+                    type="text"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
+                    placeholder="Ingrese la cédula del odontólogo"
+                    aria-label="Cédula del odontólogo"
+                />
+                <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -115,7 +125,7 @@ function GestionarOdontologos() {
                     placeholder="Ingrese la contraseña del odontólogo"
                     aria-label="Contraseña del odontólogo"
                 />
-                <button onClick={agregarOdontologo} disabled={!nombre.trim() || !email.trim() || !password.trim()}>
+                <button onClick={agregarOdontologo} disabled={!nombre.trim() || !cedula.trim() || !email.trim() || !password.trim()}>
                     Agregar Odontólogo
                 </button>
             </div>
@@ -131,6 +141,9 @@ function GestionarOdontologos() {
                                 <div>
                                     <strong>{odontologo.nombre}</strong> - {odontologo.email}
                                     <span className="role-badge">{` - Rol: ${odontologo.role}`}</span> {/* Mostrar el rol */}
+                                </div>
+                                <div>
+                                    <strong>Cédula: </strong>{odontologo.cedula} {/* Mostrar la cédula */}
                                 </div>
                                 <div>
                                     {/* Mostrar/Ocultar contraseña */}

@@ -4,6 +4,7 @@ import '../styles/components/GestionarAdministradores.css';
 function GestionarAdministradores() {
     const [administradores, setAdministradores] = useState([]);
     const [nombre, setNombre] = useState('');  // Estado para el nombre
+    const [cedula, setCedula] = useState('');  // Estado para la cédula
     const [email, setEmail] = useState('');    // Estado para el correo
     const [password, setPassword] = useState(''); // Estado para la contraseña
     const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar la contraseña
@@ -21,7 +22,7 @@ function GestionarAdministradores() {
     }, []);
 
     const agregarAdministrador = () => {
-        if (!nombre.trim() || !email.trim() || !password.trim()) {
+        if (!nombre.trim() || !cedula.trim() || !email.trim() || !password.trim()) {
             alert('Por favor ingresa todos los datos del administrador.');
             return;
         }
@@ -30,6 +31,7 @@ function GestionarAdministradores() {
         const nuevoAdministrador = { 
             id: Date.now(), 
             nombre, 
+            cedula, // Asociamos la cédula
             email, 
             password, 
             role: 'admin'  // Asignamos el rol 'admin' por defecto
@@ -54,6 +56,7 @@ function GestionarAdministradores() {
 
         // Limpiar los campos de entrada
         setNombre('');
+        setCedula('');
         setEmail('');
         setPassword('');
 
@@ -100,6 +103,13 @@ function GestionarAdministradores() {
                     aria-label="Nombre del administrador"
                 />
                 <input
+                    type="text"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
+                    placeholder="Ingrese la cédula del administrador"
+                    aria-label="Cédula del administrador"
+                />
+                <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -127,7 +137,7 @@ function GestionarAdministradores() {
 
                 <button 
                     onClick={agregarAdministrador} 
-                    disabled={!nombre.trim() || !email.trim() || !password.trim()}
+                    disabled={!nombre.trim() || !cedula.trim() || !email.trim() || !password.trim()}
                 >
                     Agregar Administrador
                 </button>
@@ -142,6 +152,7 @@ function GestionarAdministradores() {
                         <li key={admin.id}>
                             <div>
                                 <strong>{admin.nombre}</strong> ({admin.email})
+                                <span className="cedula">Cédula: {admin.cedula}</span> {/* Mostrar la cédula */}
                                 <span className="role-badge">{` - Rol: ${admin.role}`}</span> {/* Mostrar el rol */}
                             </div>
                             <div>
