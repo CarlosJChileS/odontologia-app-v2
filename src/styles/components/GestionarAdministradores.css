@@ -1,0 +1,101 @@
+/* GestionarAdministradores.css */
+
+/* Contenedor principal */
+.gestionar-administradores-container {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Título */
+.gestionar-administradores-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilo para los campos de entrada */
+.input-container input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.input-container button {
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #D62828;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover {
+    background-color: #B71C1C;
+}
+
+/* Estilo de la lista de administradores */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+button {
+    background-color: #C82333;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #B71C1C;
+}
+
+/* Estilo para el mensaje de error */
+.error {
+    color: red;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+textarea {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: vertical; /* Permite que el usuario ajuste la altura */
+    box-sizing: border-box;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #0056b3;
+}

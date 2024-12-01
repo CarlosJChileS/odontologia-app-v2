@@ -20,7 +20,7 @@
     font-weight: 600;
 }
 
-/* Estilo para el campo de entrada y el botón */
+/* Formulario de entrada */
 .input-container {
     display: flex;
     flex-direction: column;
@@ -40,13 +40,16 @@
     transition: border-color 0.3s ease;
 }
 
-/* Efecto en el campo de entrada cuando recibe foco */
 .input-container input:focus {
     border-color: #D62828;
     outline: none;
 }
 
-/* Estilo para el botón de agregar paciente */
+.checkbox-label {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
 .input-container button {
     padding: 12px;
     font-size: 1.1rem;
@@ -60,57 +63,81 @@
     max-width: 200px;
 }
 
-/* Estilo del botón cuando está deshabilitado */
 .input-container button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-/* Efecto en el botón cuando el cursor pasa sobre él */
 .input-container button:hover {
     background-color: #B71C1C;
 }
 
-/* Estilo para la lista de pacientes */
+/* Estilos de la lista de pacientes */
 ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-/* Estilo de cada elemento de la lista */
-ul li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 10px;
-    font-size: 1.1rem;
+.paciente-item {
     background-color: #f9f9f9;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s ease;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Efecto al pasar el cursor sobre un paciente */
-ul li:hover {
-    background-color: #f1f1f1;
+.paciente-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Estilo para los botones de eliminar */
-ul li button {
+.paciente-nombre {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.paciente-email {
+    font-size: 1rem;
+    color: #555;
+    margin: 8px 0;
+}
+
+.eliminar-btn {
     background-color: #C82333;
     color: white;
-    padding: 5px 10px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.eliminar-btn:hover {
+    background-color: #B71C1C;
+}
+
+.paciente-contrasena {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.toggle-contrasena-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 6px 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-/* Efecto al pasar el cursor sobre el botón de eliminar */
-ul li button:hover {
-    background-color: #B71C1C;
+.toggle-contrasena-btn:hover {
+    background-color: #0056b3;
 }
 
 /* Estilo para el mensaje de error */
@@ -119,9 +146,4 @@ ul li button:hover {
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 1rem;
-}
-
-/* Estilo de los campos de entrada cuando hay un error */
-.input-container input:invalid {
-    border-color: red;
 }

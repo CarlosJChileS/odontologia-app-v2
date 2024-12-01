@@ -17,6 +17,7 @@ function MenuAdministrador() {
             <button onClick={() => navigate('/gestionar-pacientes')}>Gestionar Pacientes</button>
             <button onClick={() => navigate('/gestionar-odontologos')}>Gestionar Odontólogos</button>
             <button onClick={() => navigate('/gestionar-citas')}>Gestionar Citas</button>
+            <button onClick={() => navigate('/gestionar-administradores')}>Gestionar Administradores</button>
             <button onClick={logout}>Cerrar Sesión</button>
         </div>
     );

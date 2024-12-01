@@ -28,13 +28,21 @@ function GestionarCitas() {
         <div className="gestionar-citas-container">
             <h1>Gestionar Citas</h1>
             <ul>
-                {citas.map(cita => (
-                    <li key={cita.id}>
-                        <p>Paciente: {cita.paciente}</p>
-                        <p>Fecha: {cita.fecha}</p>
-                        <button onClick={() => eliminarCita(cita.id)}>Eliminar Cita</button>
-                    </li>
-                ))}
+                {citas.length === 0 ? (
+                    <li>No hay citas registradas.</li>
+                ) : (
+                    citas.map(cita => (
+                        <li key={cita.id} className="cita-item">
+                            <div className="cita-info">
+                                <p><strong>Paciente:</strong> {cita.paciente.nombre} ({cita.paciente.email})</p>
+                                <p><strong>Fecha:</strong> {cita.fecha}</p>
+                            </div>
+                            <button onClick={() => eliminarCita(cita.id)} className="eliminar-cita-btn">
+                                Eliminar Cita
+                            </button>
+                        </li>
+                    ))
+                )}
             </ul>
         </div>
     );

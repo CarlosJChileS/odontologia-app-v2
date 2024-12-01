@@ -13,7 +13,7 @@ import GestionarHistoriasClinicas from './components/GestionarHistoriasClinicas'
 import GestionarPacientes from './components/GestionarPacientes';
 import GestionarOdontologos from './components/GestionarOdontologos';
 import GestionarCitas from './components/GestionarCitas';
-import Admin from './components/Admin';
+import GestionarAdministradores from './components/GestionarAdministradores'; // Asegúrate de importar el componente
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -59,6 +59,14 @@ function App() {
                             <GestionarCitas />
                         </ProtectedRoute>
                     } 
+                />
+                <Route 
+                    path="/gestionar-administradores"  // Nueva ruta para gestionar administradores
+                    element={
+                        <ProtectedRoute allowedRoles={['admin']}>
+                            <GestionarAdministradores />
+                        </ProtectedRoute>
+                    }
                 />
 
                 {/* Rutas protegidas para paciente */}
