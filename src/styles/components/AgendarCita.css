@@ -4,10 +4,11 @@ body {
     background: linear-gradient(45deg, rgba(214, 40, 40, 0.5), rgba(76, 175, 80, 0.5)); /* Fondo gradiente con 50% de opacidad */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Cambiado de center a flex-start */
     min-height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow-y: auto;  /* Permitir scroll vertical */
+    padding: 20px 0; /* Añadir padding para asegurarnos de que el contenido no toque los bordes */
 }
 
 /* Contenedor principal */
@@ -20,6 +21,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     text-align: center;
     margin: 20px;
+    overflow-y: auto;  /* Permitir scroll en el contenedor si el contenido es largo */
 }
 
 /* Título principal */
@@ -182,4 +184,65 @@ button[type="button"]:hover {
     form button {
         margin: 5px 0; /* Reducir márgenes */
     }
+}
+
+/* Estilo del contenedor de citas */
+#agendarCita {
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #c0392b;
+}
+
+.citas-container {
+    max-height: 400px;  /* Limita la altura del contenedor */
+    overflow-y: auto;  /* Habilita el scroll vertical */
+    margin-top: 20px;
+    padding-right: 10px; /* Añadimos un poco de espacio para el scrollbar */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.citas-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.citas-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.citas-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
 }

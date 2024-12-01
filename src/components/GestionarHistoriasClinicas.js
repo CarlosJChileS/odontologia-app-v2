@@ -177,14 +177,21 @@ function GestionarHistoriasClinicas() {
                                 onChange={(e) => setCedulaPaciente(e.target.value)}
                                 placeholder="Ingrese la cédula del paciente"
                             />
-                            <input
-                                type="text"
+                            <select
                                 value={tipoSangre}
                                 onChange={(e) => setTipoSangre(e.target.value)}
-                                placeholder="Tipo de sangre"
-                            />
-                            <input
-                                type="text"
+                            >
+                                <option value="">Seleccionar Tipo de Sangre</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                            <textarea
                                 value={motivoConsulta}
                                 onChange={(e) => setMotivoConsulta(e.target.value)}
                                 placeholder="Motivo de consulta"
@@ -199,38 +206,32 @@ function GestionarHistoriasClinicas() {
                                 onChange={(e) => setAntecedentesPatoPersonales(e.target.value)}
                                 placeholder="Antecedentes patológicos personales"
                             />
-                            <input
-                                type="text"
+                            <textarea
                                 value={constantesVitales}
                                 onChange={(e) => setConstantesVitales(e.target.value)}
                                 placeholder="Constantes vitales"
                             />
-                            <input
-                                type="text"
+                            <textarea
                                 value={sistemaEstomatognatico}
                                 onChange={(e) => setSistemaEstomatognatico(e.target.value)}
                                 placeholder="Sistema estomatognático"
                             />
-                            <input
-                                type="text"
+                            <textarea
                                 value={odontograma}
                                 onChange={(e) => setOdontograma(e.target.value)}
                                 placeholder="Odontograma"
                             />
-                            <input
-                                type="text"
+                            <textarea
                                 value={indicadoresSaludBucal}
                                 onChange={(e) => setIndicadoresSaludBucal(e.target.value)}
                                 placeholder="Indicadores de salud bucal"
                             />
-                            <input
-                                type="text"
+                            <textarea
                                 value={indicesCPO}
                                 onChange={(e) => setIndicesCPO(e.target.value)}
                                 placeholder="Índices CPO"
                             />
-                            <input
-                                type="text"
+                            <textarea
                                 value={diagnostico}
                                 onChange={(e) => setDiagnostico(e.target.value)}
                                 placeholder="Diagnóstico"

@@ -10,6 +10,7 @@ function AgendarCita() {
     const [descripcion, setDescripcion] = useState('');
     const [usuarioRol, setUsuarioRol] = useState(null);
     const [usuarioCedula, setUsuarioCedula] = useState('');
+    const [citas, setCitas] = useState([]); // Nuevo estado para las citas
     const navigate = useNavigate();
 
     // Validar solo números para la cédula
@@ -33,17 +34,18 @@ function AgendarCita() {
         const usuario = JSON.parse(localStorage.getItem('usuarios')).find(u => u.role === rol);
 
         if (!rol) {
-            // Si no hay rol, redirigimos a login
             alert('No estás logueado. Inicia sesión primero.');
             navigate('/login');
         } else {
             setUsuarioRol(rol);
-            // Si el rol es paciente, se carga la cédula del paciente automáticamente
             if (rol === 'paciente' && usuario) {
                 setCedula(usuario.cedula); // Suponemos que la cédula está guardada en el objeto del usuario
                 setUsuarioCedula(usuario.cedula);
             }
         }
+        // Cargar las citas desde localStorage
+        const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
+        setCitas(citasGuardadas);
     }, [navigate]);
 
     const guardarCita = (event) => {
@@ -68,11 +70,14 @@ function AgendarCita() {
         };
 
         // Cargar las citas desde localStorage
-        let citas = JSON.parse(localStorage.getItem('citas')) || [];
-        citas.push(nuevaCita);
+        let citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
+        citasGuardadas.push(nuevaCita);
 
         // Guardar las citas en localStorage
-        localStorage.setItem('citas', JSON.stringify(citas));
+        localStorage.setItem('citas', JSON.stringify(citasGuardadas));
+
+        // Actualizar el estado local
+        setCitas(citasGuardadas);
 
         alert('Cita guardada con éxito');
         setCedula('');
@@ -92,6 +97,23 @@ function AgendarCita() {
             horas.push(horaFormato);
         }
         return horas;
+    };
+
+    // Eliminar una cita
+    const eliminarCita = (idCita) => {
+        const confirmarEliminar = window.confirm("¿Estás seguro de que deseas eliminar esta cita?");
+        if (!confirmarEliminar) return;
+
+        // Filtrar las citas para eliminar la seleccionada
+        const citasFiltradas = citas.filter(cita => cita.id !== idCita);
+
+        // Actualizar el localStorage con las citas filtradas
+        localStorage.setItem('citas', JSON.stringify(citasFiltradas));
+
+        // Actualizar el estado de las citas
+        setCitas(citasFiltradas);
+
+        alert("Cita eliminada con éxito");
     };
 
     // Volver al menú según el rol
@@ -174,6 +196,22 @@ function AgendarCita() {
                 <button type="submit">Guardar Cita</button>
                 <button type="button" onClick={volverAlMenu}>Volver al Menú</button>
             </form>
+
+            <div id="citasContenedor">
+                <h2>Citas Agendadas</h2>
+                <ul>
+                    {citas.map(cita => (
+                        <li key={cita.id}>
+                            <strong>Cédula:</strong> {cita.cedula}<br />
+                            <strong>Fecha:</strong> {cita.fecha}<br />
+                            <strong>Hora:</strong> {cita.hora}<br />
+                            <strong>Ubicación:</strong> {cita.ubicacion}<br />
+                            <strong>Descripción:</strong> {cita.descripcion}<br />
+                            <button onClick={() => eliminarCita(cita.id)}>Eliminar</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }

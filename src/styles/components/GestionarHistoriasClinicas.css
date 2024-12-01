@@ -47,7 +47,7 @@
 }
 
 /* Estilo de los campos del formulario */
-input[type="text"], input[type="number"], textarea {
+input[type="text"], input[type="number"], textarea, select {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -58,14 +58,14 @@ input[type="text"], input[type="number"], textarea {
     transition: border-color 0.3s ease;
 }
 
-/* Efecto focus en los inputs */
-input:focus, textarea:focus {
+/* Efecto focus en los inputs y select */
+input:focus, textarea:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
 /* Deshabilitar campos */
-input[type="text"]:disabled, textarea:disabled {
+input[type="text"]:disabled, textarea:disabled, select:disabled {
     background-color: #f0f0f0;
     cursor: not-allowed;
 }
@@ -192,7 +192,7 @@ ul li button:hover {
     }
 
     /* Ajuste de campos del formulario */
-    input[type="text"], input[type="number"], textarea {
+    input[type="text"], input[type="number"], textarea, select {
         padding: 10px;
         font-size: 0.9rem;
     }
@@ -234,7 +234,7 @@ ul li button:hover {
     }
 
     /* Ajuste de campos del formulario */
-    input[type="text"], input[type="number"], textarea {
+    input[type="text"], input[type="number"], textarea, select {
         padding: 12px;
         font-size: 1rem;
     }

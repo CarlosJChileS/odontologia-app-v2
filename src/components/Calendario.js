@@ -16,7 +16,7 @@ function Calendario() {
     useEffect(() => {
         const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
         const eventosCitas = storedCitas.map(cita => ({
-            id: cita.id,
+            id: cita.id, // Usamos el ID de la cita
             title: `Cédula: ${cita.cedula}`,
             start: `${cita.fecha}T${cita.hora}`,
             extendedProps: {
@@ -27,37 +27,47 @@ function Calendario() {
         setEventos(eventosCitas);
     }, []);
 
-    // Manejar el clic en un evento (cita)
+    // Eliminar la cita seleccionada
+    const eliminarCita = (idCita) => {
+        // Recuperamos las citas actuales desde localStorage
+        const citas = JSON.parse(localStorage.getItem('citas')) || [];
+
+        // Filtramos la cita que no queremos
+        const citasFiltradas = citas.filter(cita => cita.id !== idCita);
+
+        // Si la cita fue eliminada, actualizamos el localStorage
+        if (citas.length !== citasFiltradas.length) {
+            localStorage.setItem('citas', JSON.stringify(citasFiltradas));
+
+            // Actualizamos el estado de los eventos
+            setEventos(citasFiltradas.map(cita => ({
+                id: cita.id,
+                title: `Cédula: ${cita.cedula}`,
+                start: `${cita.fecha}T${cita.hora}`,
+                extendedProps: {
+                    descripcion: cita.descripcion,
+                    ubicacion: cita.ubicacion,
+                },
+            })));
+
+            alert("Cita eliminada con éxito");
+        } else {
+            alert("No se encontró la cita que quieres eliminar");
+        }
+    };
+
+    // Manejar el clic en un evento (cita) y confirmar eliminación
     const handleEventClick = (info) => {
         const detallesCita = `Detalles de la cita:\n\nCédula: ${info.event.title}\nDescripción: ${info.event.extendedProps.descripcion}`;
         const confirmarEliminar = window.confirm(`${detallesCita}\n\n¿Deseas eliminar esta cita?`);
 
         if (confirmarEliminar) {
-            eliminarCita(info.event.id); // Eliminar cita del localStorage
+            // Eliminar la cita utilizando el ID del evento
+            eliminarCita(info.event.id);  // Usamos el ID único del evento para eliminar la cita
 
-            // Filtramos el evento del calendario y actualizamos el estado
-            setEventos((prevEventos) => {
-                return prevEventos.filter(evento => evento.id !== info.event.id);
-            });
-
-            // Actualizamos FullCalendar para reflejar la eliminación
-            const calendarApi = calendarRef.current.getApi();
-            calendarApi.refetchEvents(); // Forzamos a FullCalendar a recargar los eventos
+            // Eliminar el evento del calendario (directamente desde el estado)
+            setEventos((prevEventos) => prevEventos.filter(evento => evento.id !== info.event.id));
         }
-    };
-
-    // Eliminar cita de localStorage
-    const eliminarCita = (idCita) => {
-        // Recuperar las citas almacenadas en localStorage
-        let citas = JSON.parse(localStorage.getItem('citas')) || [];
-
-        // Filtrar la cita eliminada
-        citas = citas.filter(cita => cita.id !== idCita);
-
-        // Guardar las citas actualizadas en localStorage
-        localStorage.setItem('citas', JSON.stringify(citas));
-
-        alert("Cita eliminada con éxito");
     };
 
     return (
@@ -73,11 +83,11 @@ function Calendario() {
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay',
                 }}
-                events={eventos} // Pasamos los eventos al FullCalendar
+                events={eventos}  // Pasamos los eventos al FullCalendar
                 dateClick={(info) => calendarRef.current.getApi().changeView('timeGridDay', info.dateStr)}
-                eventClick={handleEventClick} // Definimos el comportamiento al hacer clic en un evento
+                eventClick={handleEventClick}  // Define el comportamiento al hacer clic en un evento
                 eventDidMount={(info) => {
-                    // Ajustamos el texto del evento para que no se desborde
+                    // Ajustamos el texto del evento para evitar que se desborde
                     if (info.el && info.el.querySelector('.fc-event-title')) {
                         const titleElement = info.el.querySelector('.fc-event-title');
                         titleElement.style.whiteSpace = 'normal';
