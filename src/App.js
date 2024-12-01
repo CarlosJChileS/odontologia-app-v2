@@ -10,10 +10,6 @@ import AgendarCita from './components/AgendarCita';
 import Calendario from './components/Calendario';
 import VerHistoriasClinicas from './components/VerHistoriasClinicas';
 import GestionarHistoriasClinicas from './components/GestionarHistoriasClinicas';
-import GestionarPacientes from './components/GestionarPacientes';
-import GestionarOdontologos from './components/GestionarOdontologos';
-import GestionarCitas from './components/GestionarCitas';
-import GestionarAdministradores from './components/GestionarAdministradores'; // Asegúrate de importar el componente
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -35,38 +31,6 @@ function App() {
                             <MenuAdministrador />
                         </ProtectedRoute>
                     } 
-                />
-                <Route 
-                    path="/gestionar-pacientes" 
-                    element={
-                        <ProtectedRoute allowedRoles={['admin']}>
-                            <GestionarPacientes />
-                        </ProtectedRoute>
-                    } 
-                />
-                <Route 
-                    path="/gestionar-odontologos" 
-                    element={
-                        <ProtectedRoute allowedRoles={['admin']}>
-                            <GestionarOdontologos />
-                        </ProtectedRoute>
-                    } 
-                />
-                <Route 
-                    path="/gestionar-citas" 
-                    element={
-                        <ProtectedRoute allowedRoles={['admin']}>
-                            <GestionarCitas />
-                        </ProtectedRoute>
-                    } 
-                />
-                <Route 
-                    path="/gestionar-administradores"  // Nueva ruta para gestionar administradores
-                    element={
-                        <ProtectedRoute allowedRoles={['admin']}>
-                            <GestionarAdministradores />
-                        </ProtectedRoute>
-                    }
                 />
 
                 {/* Rutas protegidas para paciente */}
