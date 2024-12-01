@@ -1,43 +1,46 @@
-/* src/styles/components/VerHistoriasClinicas.css */
-
+/* Estilo global para el cuerpo y la página */
 body {
+    margin: 0;
+    padding: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #fafafa; /* Fondo claro para mayor contraste */
+    background-color: #f4f7fb; /* Fondo gris suave */
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    margin: 0;
-    padding: 20px;
 }
 
+/* Contenedor principal */
 .container {
     width: 100%;
-    max-width: 900px;
-    background-color: #ffffff;
+    max-width: 960px;
     padding: 30px 40px;
+    background-color: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     margin-top: 30px;
+    text-align: center;
 }
 
+/* Título principal */
 h1 {
     font-size: 2.5rem;
-    color: #333; /* Color oscuro para asegurar un buen contraste */
+    color: #333;
     margin-bottom: 25px;
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-transform: capitalize;
 }
 
+/* Estilo de los mensajes */
 .mensaje {
     font-size: 1.1rem;
-    color: #388e3c; /* Verde vibrante para destacar mensajes */
+    color: #4caf50; /* Verde más suave */
     margin: 10px 0;
     font-weight: 500;
 }
 
+/* Contenedor de botones */
 .button-container {
     display: flex;
     justify-content: center;
@@ -45,63 +48,99 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* Estilo de los botones */
 button {
-    background-color: #388e3c; /* Verde brillante */
+    background-color: #4caf50; /* Verde vibrante */
     color: #ffffff;
     border: none;
-    padding: 12px 25px;
+    padding: 14px 30px;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     outline: none;
 }
 
 button:hover {
-    background-color: #2c6b2f; /* Un verde más oscuro para el hover */
+    background-color: #388e3c; /* Verde más oscuro al pasar el mouse */
     transform: translateY(-2px);
 }
 
 button:active {
-    transform: translateY(1px); /* Efecto de presionar el botón */
+    transform: translateY(1px); /* Efecto de "presionar" */
 }
 
+/* Estilo de la lista de historias clínicas */
 ul {
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
 }
 
+/* Estilo de los elementos de la lista */
 li {
-    background-color: #f5f5f5; /* Fondo claro para mayor contraste con el texto */
+    background-color: #fafafa; /* Fondo gris muy claro */
     padding: 20px 25px;
     margin-bottom: 18px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
     text-align: left;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Efecto de hover para los items */
 li:hover {
-    background-color: #e1f5e1; /* Fondo verde suave al pasar el mouse */
+    background-color: #e8f5e9; /* Fondo verde suave al pasar el mouse */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Añadir un icono de "leer más" al hacer hover en textos largos */
+li:hover p.truncated-text {
+    display: none; /* Ocultar el texto truncado al hacer hover */
+}
+
+li:hover p.full-text {
+    display: block; /* Mostrar el texto completo */
+}
+
+/* Estilos de los párrafos dentro de los items */
 li p {
     margin: 8px 0;
-    color: #333; /* Color oscuro para un buen contraste */
+    color: #555; /* Texto gris oscuro */
     font-size: 1rem;
+    line-height: 1.6;
+    display: block;
+    height: auto;
 }
 
+/* Estilo para textos importantes dentro de los items */
 li p strong {
-    color: #388e3c; /* Verde destacado para los textos importantes */
+    color: #388e3c; /* Verde destacado */
     font-weight: 600;
 }
 
+/* Texto truncado para las historias clínicas largas */
+li p.truncated-text {
+    display: block;
+    max-height: 100px; /* Limitar la altura del texto para que no se sobrepase */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Mostrar "..." cuando el texto es largo */
+}
+
+/* Texto completo, que aparece al hacer hover */
+li p.full-text {
+    display: none;
+    padding-top: 10px;
+}
+
+/* Estilos para dispositivos más pequeños */
 @media (max-width: 768px) {
     .container {
-        padding: 20px 30px;
+        padding: 25px;
     }
 
     h1 {
@@ -109,18 +148,19 @@ li p strong {
     }
 
     button {
-        padding: 10px 20px;
+        padding: 12px 24px;
     }
 
     li {
-        padding: 15px 20px;
+        padding: 18px 20px;
     }
 
     li p {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 }
 
+/* Estilos para dispositivos móviles */
 @media (max-width: 480px) {
     .container {
         padding: 15px;
@@ -131,11 +171,12 @@ li p strong {
     }
 
     button {
-        padding: 8px 15px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
     }
 
     li {
-        padding: 12px 18px;
+        padding: 14px 18px;
     }
 
     li p {

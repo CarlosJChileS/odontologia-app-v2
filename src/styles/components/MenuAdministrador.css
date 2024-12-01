@@ -1,61 +1,204 @@
-/* Aseguramos que el body y html permitan desplazamiento */
+/* Estilo global del cuerpo y la página */
 body, html {
-    height: 100%;  /* El body y html ocupan toda la altura */
     margin: 0;
     padding: 0;
-    overflow-y: auto; /* Permitir desplazamiento vertical en toda la página */
-}
-
-/* Contenedor principal de la página */
-.menu-administrador {
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
-    box-sizing: border-box;
-    min-height: 100vh; /* Asegura que el contenedor ocupe al menos el 100% de la altura de la pantalla */
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f9fc; /* Fondo suave */
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-/* Contenedor de los campos de formulario */
+/* Contenedor principal del menú del administrador */
+.menu-administrador {
+    width: 100%;
+    max-width: 900px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin: 20px;
+}
+
+/* Título principal */
+.menu-administrador h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+/* Estilo para los formularios de entrada */
 .input-container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
-/* Inputs y botones dentro del formulario */
+/* Estilo de los campos de entrada (inputs y select) */
 .input-container input,
 .input-container select,
 .input-container button {
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-}
-
-/* Estilo de la lista de usuarios */
-.usuarios-lista {
-    overflow-y: auto;  /* Habilitar scroll si el contenido es grande */
-    padding: 10px;
-    margin-top: 20px;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     background-color: #f9f9f9;
-    border-radius: 5px;
-    max-height: none; /* Permite que la lista ocupe más espacio sin límite */
+    color: #333;
+    box-sizing: border-box;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Estilo de los botones */
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #2196F3;
+/* Efecto de hover para los inputs y select */
+.input-container input:hover,
+.input-container select:hover {
+    border-color: #007bff; /* Resaltar al pasar el mouse */
+}
+
+/* Efecto de enfoque (focus) */
+.input-container input:focus,
+.input-container select:focus {
+    border-color: #007bff; /* Borde azul al hacer focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Sombra sutil */
+}
+
+/* Estilo del botón de creación de usuario */
+.input-container button {
+    background-color: #2196f3;
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 15px;
+    font-size: 1.1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
+.input-container button:hover {
     background-color: #0b7dda;
+    transform: translateY(-2px);
+}
+
+.input-container button:active {
+    transform: translateY(1px);
+}
+
+/* Estilo para la lista de usuarios */
+.usuarios-lista {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 30px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.usuarios-lista h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Lista de usuarios (estilo de cada ítem) */
+.usuarios-lista ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.usuarios-lista li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.usuarios-lista li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.usuarios-lista li div {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Estilo de los botones de eliminar en la lista de usuarios */
+.usuarios-lista li button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.usuarios-lista li button:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* Estilo para el botón de cerrar sesión */
+.menu-administrador button:last-of-type {
+    background-color: #f44336;
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+.menu-administrador button:last-of-type:hover {
+    background-color: #e53935;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .menu-administrador {
+        padding: 25px;
+    }
+
+    .input-container input,
+    .input-container select,
+    .input-container button {
+        font-size: 1rem;
+    }
+
+    .menu-administrador h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+    .menu-administrador {
+        padding: 15px;
+    }
+
+    .input-container input,
+    .input-container select,
+    .input-container button {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+
+    .menu-administrador h1 {
+        font-size: 1.8rem;
+    }
 }
