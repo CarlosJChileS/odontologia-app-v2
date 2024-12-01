@@ -41,6 +41,7 @@ function AgendarCita() {
             ubicacion,
             descripcion,
             id: Date.now(),
+            historiaClinica: null,  // Inicialmente no tiene historia clínica asignada
         };
 
         // Cargar las citas desde localStorage

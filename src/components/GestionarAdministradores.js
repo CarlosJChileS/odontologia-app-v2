@@ -26,16 +26,27 @@ function GestionarAdministradores() {
             return;
         }
 
-        // Crear un nuevo administrador
-        const nuevoAdministrador = { id: Date.now(), nombre, email, password };
+        // Crear un nuevo administrador con rol 'admin'
+        const nuevoAdministrador = { 
+            id: Date.now(), 
+            nombre, 
+            email, 
+            password, 
+            role: 'admin'  // Asignamos el rol 'admin' por defecto
+        };
 
         // Actualizar la lista de administradores
         const updatedAdministradores = [...administradores, nuevoAdministrador];
         setAdministradores(updatedAdministradores);
 
-        // Guardar la lista actualizada en localStorage
+        // Guardar la lista de administradores actualizada en localStorage
         try {
             localStorage.setItem('administradores', JSON.stringify(updatedAdministradores));
+
+            // También agregamos el nuevo administrador en la lista global de usuarios
+            const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+            usuariosGuardados.push(nuevoAdministrador);  // Agregar al array global de usuarios
+            localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados));
         } catch (err) {
             setError('Hubo un error al guardar los administradores.');
             console.error(err);
@@ -57,9 +68,14 @@ function GestionarAdministradores() {
             const updatedAdministradores = administradores.filter(admin => admin.id !== id);
             setAdministradores(updatedAdministradores);
 
-            // Guardar la lista actualizada en localStorage
+            // Guardar la lista de administradores actualizada en localStorage
             try {
                 localStorage.setItem('administradores', JSON.stringify(updatedAdministradores));
+
+                // También eliminamos el administrador de la lista global de usuarios
+                const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+                const updatedUsuarios = usuariosGuardados.filter(user => user.id !== id);
+                localStorage.setItem('usuarios', JSON.stringify(updatedUsuarios));
             } catch (err) {
                 setError('Hubo un error al eliminar el administrador.');
                 console.error(err);
@@ -91,24 +107,13 @@ function GestionarAdministradores() {
                     aria-label="Correo electrónico"
                 />
 
-                {/* Cambiar el input de contraseña a un textarea con scroll */}
-                <textarea
+                {/* Campo de contraseña */}
+                <input
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Ingrese la contraseña del administrador"
-                    rows="3"
-                    style={{
-                        resize: 'none', 
-                        width: '100%', 
-                        fontSize: '1rem', 
-                        padding: '10px', 
-                        borderRadius: '5px', 
-                        border: '1px solid #ddd',
-                        fontFamily: 'Arial, sans-serif',
-                        display: 'block',
-                    }}
                     aria-label="Contraseña"
-                    disabled={!showPassword}
                 />
 
                 <label>
@@ -135,28 +140,23 @@ function GestionarAdministradores() {
                 ) : (
                     administradores.map(admin => (
                         <li key={admin.id}>
-                            {admin.nombre} ({admin.email})
+                            <div>
+                                <strong>{admin.nombre}</strong> ({admin.email})
+                                <span className="role-badge">{` - Rol: ${admin.role}`}</span> {/* Mostrar el rol */}
+                            </div>
+                            <div>
+                                {/* Mostrar la contraseña del administrador con scroll */}
+                                <strong>Contraseña: </strong> 
+                                <input
+                                    type="text"
+                                    value={admin.password}
+                                    readOnly
+                                    className="password-field"
+                                />
+                            </div>
                             <button onClick={() => eliminarAdministrador(admin.id)} aria-label={`Eliminar ${admin.nombre}`}>
                                 Eliminar
                             </button>
-                            {/* Mostrar la contraseña del administrador con scroll */}
-                            <div className="admin-password">
-                                <strong>Contraseña: </strong> 
-                                <textarea
-                                    value={admin.password}
-                                    readOnly
-                                    rows="3"
-                                    style={{
-                                        resize: 'none',
-                                        width: '100%',
-                                        fontSize: '1rem',
-                                        padding: '10px',
-                                        borderRadius: '5px',
-                                        border: '1px solid #ddd',
-                                        fontFamily: 'Arial, sans-serif',
-                                    }}
-                                />
-                            </div>
                         </li>
                     ))
                 )}

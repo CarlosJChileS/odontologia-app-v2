@@ -7,7 +7,7 @@ function GestionarOdontologos() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    const [mostrarContrasena, setMostrarContrasena] = useState(false);
+    const [mostrarContrasenas, setMostrarContrasenas] = useState({}); // Estado para mostrar contraseñas individuales
 
     useEffect(() => {
         try {
@@ -26,8 +26,14 @@ function GestionarOdontologos() {
             return;
         }
 
-        // Crear un nuevo odontólogo con los datos ingresados
-        const nuevoOdontologo = { id: Date.now(), nombre, email, password };
+        // Crear un nuevo odontólogo con los datos ingresados y rol 'odontologo'
+        const nuevoOdontologo = { 
+            id: Date.now(), 
+            nombre, 
+            email, 
+            password,
+            role: 'odontologo'  // Asignamos el rol 'odontologo' por defecto
+        };
 
         // Actualizar la lista de odontólogos
         const updatedOdontologos = [...odontologos, nuevoOdontologo];
@@ -36,6 +42,11 @@ function GestionarOdontologos() {
         // Guardar la lista actualizada en localStorage
         try {
             localStorage.setItem('odontologos', JSON.stringify(updatedOdontologos));
+
+            // También agregar el odontólogo a la lista global de usuarios
+            const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+            usuariosGuardados.push(nuevoOdontologo);
+            localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados));
         } catch (err) {
             setError('Hubo un error al guardar los odontólogos.');
             console.error(err);
@@ -50,13 +61,17 @@ function GestionarOdontologos() {
     };
 
     const eliminarOdontologo = (id) => {
-        // Eliminar un odontólogo de la lista
         const updatedOdontologos = odontologos.filter(odontologo => odontologo.id !== id);
         setOdontologos(updatedOdontologos);
 
         // Guardar la lista actualizada en localStorage
         try {
             localStorage.setItem('odontologos', JSON.stringify(updatedOdontologos));
+
+            // Eliminar el odontólogo de la lista global de usuarios
+            const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const updatedUsuarios = usuariosGuardados.filter(user => user.id !== id);
+            localStorage.setItem('usuarios', JSON.stringify(updatedUsuarios));
         } catch (err) {
             setError('Hubo un error al eliminar el odontólogo.');
             console.error(err);
@@ -65,15 +80,18 @@ function GestionarOdontologos() {
         alert('Odontólogo eliminado');
     };
 
-    const toggleMostrarContrasena = () => {
-        setMostrarContrasena(!mostrarContrasena);
+    const toggleMostrarContrasena = (id) => {
+        setMostrarContrasenas(prevState => ({
+            ...prevState,
+            [id]: !prevState[id], // Cambiar el estado solo para el odontólogo con el id correspondiente
+        }));
     };
 
     return (
         <div className="gestionar-odontologos-container">
             <h1>Gestionar Odontólogos</h1>
             {error && <div className="error">{error}</div>}
-            
+
             {/* Formulario para agregar un odontólogo */}
             <div className="input-container">
                 <input
@@ -112,13 +130,14 @@ function GestionarOdontologos() {
                             <li key={odontologo.id}>
                                 <div>
                                     <strong>{odontologo.nombre}</strong> - {odontologo.email}
+                                    <span className="role-badge">{` - Rol: ${odontologo.role}`}</span> {/* Mostrar el rol */}
                                 </div>
                                 <div>
                                     {/* Mostrar/Ocultar contraseña */}
                                     <strong>Contraseña: </strong>
-                                    {mostrarContrasena ? odontologo.password : '********'}
-                                    <button onClick={toggleMostrarContrasena} aria-label="Mostrar/Ocultar Contraseña">
-                                        {mostrarContrasena ? 'Ocultar' : 'Mostrar'}
+                                    {mostrarContrasenas[odontologo.id] ? odontologo.password : '********'}
+                                    <button onClick={() => toggleMostrarContrasena(odontologo.id)} aria-label="Mostrar/Ocultar Contraseña">
+                                        {mostrarContrasenas[odontologo.id] ? 'Ocultar' : 'Mostrar'}
                                     </button>
                                 </div>
                                 <button onClick={() => eliminarOdontologo(odontologo.id)} aria-label={`Eliminar ${odontologo.nombre}`}>

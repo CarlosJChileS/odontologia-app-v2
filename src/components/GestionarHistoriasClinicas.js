@@ -3,75 +3,200 @@ import '../styles/components/GestionarHistoriasClinicas.css';
 
 function GestionarHistoriasClinicas() {
     const [historias, setHistorias] = useState([]);
-    const [selectedHistoria, setSelectedHistoria] = useState(null);
+    const [citas, setCitas] = useState([]);
+    const [cedulaPaciente, setCedulaPaciente] = useState('');
+    const [tipoSangre, setTipoSangre] = useState('');
+    const [motivoConsulta, setMotivoConsulta] = useState('');
+    const [enfermedadActual, setEnfermedadActual] = useState('');
+    const [antecedentesPatoPersonales, setAntecedentesPatoPersonales] = useState('');
+    const [constantesVitales, setConstantesVitales] = useState('');
+    const [sistemaEstomatognatico, setSistemaEstomatognatico] = useState('');
+    const [odontograma, setOdontograma] = useState('');
+    const [indicadoresSaludBucal, setIndicadoresSaludBucal] = useState('');
+    const [indicesCPO, setIndicesCPO] = useState('');
+    const [diagnostico, setDiagnostico] = useState('');
+    const [procedimientos, setProcedimientos] = useState('');
+    const [evolucion, setEvolucion] = useState('');
+    const [selectedCita, setSelectedCita] = useState(null);
 
     useEffect(() => {
-        // Cargar historias clínicas desde localStorage
+        // Cargar historias clínicas y citas desde localStorage
         const storedHistorias = JSON.parse(localStorage.getItem('historiasClinicas')) || [];
+        const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
         setHistorias(storedHistorias);
+        setCitas(storedCitas);
     }, []);
 
-    const agregarHistoriaClinica = (historia) => {
-        // Agregar la historia clínica al listado
-        const nuevaHistoria = { ...historia, idHistoriaClinica: Date.now() };
+    // Función para agregar una historia clínica
+    const agregarHistoriaClinica = () => {
+        if (!cedulaPaciente.trim() || !tipoSangre.trim() || !motivoConsulta.trim() || !diagnostico.trim() || !procedimientos.trim()) {
+            alert('Por favor, completa todos los campos');
+            return;
+        }
 
-        // Actualizar las historias clínicas en el estado
+        const nuevaHistoria = {
+            idHistoriaClinica: Date.now(),
+            cedula: cedulaPaciente,
+            tipoSangre,
+            motivoConsulta,
+            enfermedadActual,
+            antecedentesPatoPersonales,
+            constantesVitales,
+            sistemaEstomatognatico,
+            odontograma,
+            indicadoresSaludBucal,
+            indicesCPO,
+            diagnostico,
+            procedimientos,
+            evolucion
+        };
+
+        // Buscar la cita pendiente de historia clínica
+        const citaIndex = citas.findIndex(cita => cita.cedulaPaciente === cedulaPaciente && !cita.historiaClinica);
+        if (citaIndex === -1) {
+            alert('No se encontró una cita pendiente para esta cédula');
+            return;
+        }
+
+        // Asociar la historia clínica a la cita
+        citas[citaIndex].historiaClinica = nuevaHistoria;
+
+        // Actualizar citas e historias clínicas en el estado y localStorage
+        const updatedCitas = [...citas];
         const updatedHistorias = [...historias, nuevaHistoria];
+        setCitas(updatedCitas);
         setHistorias(updatedHistorias);
 
-        // Guardar las historias clínicas actualizadas en localStorage
+        localStorage.setItem('citas', JSON.stringify(updatedCitas));
         localStorage.setItem('historiasClinicas', JSON.stringify(updatedHistorias));
 
-        alert('Historia clínica guardada');
-    };
-
-    const eliminarHistoriaClinica = (id) => {
-        // Eliminar la historia clínica de la lista
-        const updatedHistorias = historias.filter(historia => historia.idHistoriaClinica !== id);
-        setHistorias(updatedHistorias);
-
-        // Guardar las historias clínicas actualizadas en localStorage
-        localStorage.setItem('historiasClinicas', JSON.stringify(updatedHistorias));
-
-        alert('Historia clínica eliminada');
-    };
-
-    const seleccionarHistoria = (historia) => {
-        setSelectedHistoria(historia);
-    };
-
-    const cerrarDetalles = () => {
-        setSelectedHistoria(null);
+        alert('Historia clínica creada y asociada a la cita');
+        setCedulaPaciente('');
+        setTipoSangre('');
+        setMotivoConsulta('');
+        setEnfermedadActual('');
+        setAntecedentesPatoPersonales('');
+        setConstantesVitales('');
+        setSistemaEstomatognatico('');
+        setOdontograma('');
+        setIndicadoresSaludBucal('');
+        setIndicesCPO('');
+        setDiagnostico('');
+        setProcedimientos('');
+        setEvolucion('');
     };
 
     return (
         <div className="gestionar-historias-container">
             <h1>Gestionar Historias Clínicas</h1>
-            <button onClick={() => agregarHistoriaClinica({ cedula: '123', tipoSangre: 'A+', motivoConsulta: 'Dolor', diagnostico: 'Caries', procedimientos: 'Extracción' })}>
-                Agregar Historia Clínica
-            </button>
+
+            {/* Formulario para agregar una historia clínica */}
+            <div className="input-container">
+                <input
+                    type="text"
+                    value={cedulaPaciente}
+                    onChange={(e) => setCedulaPaciente(e.target.value)}
+                    placeholder="Ingrese la cédula del paciente"
+                    aria-label="Cédula del paciente"
+                />
+                <input
+                    type="text"
+                    value={tipoSangre}
+                    onChange={(e) => setTipoSangre(e.target.value)}
+                    placeholder="Tipo de sangre"
+                    aria-label="Tipo de sangre"
+                />
+                <input
+                    type="text"
+                    value={motivoConsulta}
+                    onChange={(e) => setMotivoConsulta(e.target.value)}
+                    placeholder="Motivo de consulta"
+                    aria-label="Motivo de consulta"
+                />
+                <input
+                    type="text"
+                    value={enfermedadActual}
+                    onChange={(e) => setEnfermedadActual(e.target.value)}
+                    placeholder="Enfermedad actual"
+                    aria-label="Enfermedad actual"
+                />
+                <input
+                    type="text"
+                    value={antecedentesPatoPersonales}
+                    onChange={(e) => setAntecedentesPatoPersonales(e.target.value)}
+                    placeholder="Antecedentes Patológicos Personales"
+                    aria-label="Antecedentes Patológicos Personales"
+                />
+                <input
+                    type="text"
+                    value={constantesVitales}
+                    onChange={(e) => setConstantesVitales(e.target.value)}
+                    placeholder="Constantes vitales"
+                    aria-label="Constantes vitales"
+                />
+                <input
+                    type="text"
+                    value={sistemaEstomatognatico}
+                    onChange={(e) => setSistemaEstomatognatico(e.target.value)}
+                    placeholder="Sistema Estomatognático"
+                    aria-label="Sistema Estomatognático"
+                />
+                <input
+                    type="text"
+                    value={odontograma}
+                    onChange={(e) => setOdontograma(e.target.value)}
+                    placeholder="Odontograma"
+                    aria-label="Odontograma"
+                />
+                <input
+                    type="text"
+                    value={indicadoresSaludBucal}
+                    onChange={(e) => setIndicadoresSaludBucal(e.target.value)}
+                    placeholder="Indicadores de salud bucal"
+                    aria-label="Indicadores de salud bucal"
+                />
+                <input
+                    type="text"
+                    value={indicesCPO}
+                    onChange={(e) => setIndicesCPO(e.target.value)}
+                    placeholder="Índices CPO"
+                    aria-label="Índices CPO"
+                />
+                <input
+                    type="text"
+                    value={diagnostico}
+                    onChange={(e) => setDiagnostico(e.target.value)}
+                    placeholder="Diagnóstico"
+                    aria-label="Diagnóstico"
+                />
+                <input
+                    type="text"
+                    value={procedimientos}
+                    onChange={(e) => setProcedimientos(e.target.value)}
+                    placeholder="Procedimientos"
+                    aria-label="Procedimientos"
+                />
+                <input
+                    type="text"
+                    value={evolucion}
+                    onChange={(e) => setEvolucion(e.target.value)}
+                    placeholder="Evolución"
+                    aria-label="Evolución"
+                />
+                <button onClick={agregarHistoriaClinica}>Asociar Historia Clínica</button>
+            </div>
+
+            {/* Lista de citas sin historia clínica */}
             <ul>
-                {historias.map(historia => (
-                    <li key={historia.idHistoriaClinica}>
-                        <p><strong>Cédula:</strong> {historia.cedula}</p>
-                        <p><strong>Motivo de Consulta:</strong> {historia.motivoConsulta}</p>
-                        <button onClick={() => seleccionarHistoria(historia)}>Ver Detalles</button>
-                        <button onClick={() => eliminarHistoriaClinica(historia.idHistoriaClinica)}>Eliminar</button>
+                {citas.filter(cita => !cita.historiaClinica).map(cita => (
+                    <li key={cita.id}>
+                        <p><strong>Paciente:</strong> {cita.cedulaPaciente}</p>
+                        <p><strong>Fecha:</strong> {cita.fechaCita}</p>
+                        <p><strong>Motivo de la Cita:</strong> {cita.motivoCita}</p>
+                        <button onClick={() => setSelectedCita(cita)}>Asignar Historia Clínica</button>
                     </li>
                 ))}
             </ul>
-
-            {selectedHistoria && (
-                <div className="historia-detalles">
-                    <h2>Detalles de la Historia Clínica</h2>
-                    <p><strong>Cédula:</strong> {selectedHistoria.cedula}</p>
-                    <p><strong>Tipo de Sangre:</strong> {selectedHistoria.tipoSangre}</p>
-                    <p><strong>Motivo de Consulta:</strong> {selectedHistoria.motivoConsulta}</p>
-                    <p><strong>Diagnóstico:</strong> {selectedHistoria.diagnostico}</p>
-                    <p><strong>Procedimientos:</strong> {selectedHistoria.procedimientos}</p>
-                    <button onClick={cerrarDetalles}>Cerrar</button>
-                </div>
-            )}
         </div>
     );
 }

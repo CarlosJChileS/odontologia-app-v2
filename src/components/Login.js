@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
@@ -7,22 +7,32 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Si no hay usuarios en localStorage, agregamos algunos de prueba
+        if (!localStorage.getItem('usuarios')) {
+            const usuariosEjemplo = [
+                { email: 'admin@ejemplo.com', password: 'admin123', role: 'admin' },
+                { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente' },
+                { email: 'odontologo@ejemplo.com', password: 'odontologo123', role: 'odontologo' }
+            ];
+            localStorage.setItem('usuarios', JSON.stringify(usuariosEjemplo));
+        }
+    }, []);
+
     const handleLogin = (e) => {
         e.preventDefault();
 
-        // Simulación de usuarios (sin validaciones)
-        const users = [
-            { email: 'admin@ejemplo.com', password: 'admin123', role: 'admin' },
-            { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente' },
-            { email: 'odontologo@ejemplo.com', password: 'odontologo123', role: 'odontologo' }
-        ];
+        // Recupera los usuarios desde localStorage (ahora en un array global)
+        const users = JSON.parse(localStorage.getItem('usuarios')) || [];
 
+        // Busca al usuario en los datos
         const user = users.find(u => u.email === email && u.password === password);
 
         if (user) {
+            // Guardar el rol en sessionStorage
             sessionStorage.setItem('usuarioRol', user.role);
 
-            // Redirigir según el rol
+            // Redirige a la ruta correspondiente según el rol
             switch (user.role) {
                 case 'admin':
                     navigate('/menu-administrador');
@@ -38,7 +48,7 @@ function Login() {
                     break;
             }
         } else {
-            alert('Credenciales incorrectas. Intente de nuevo.');
+            alert('Credenciales incorrectas. Intenta de nuevo.');
         }
     };
 

@@ -25,17 +25,32 @@ function GestionarPacientes() {
             return;
         }
 
-        const nuevoPaciente = { id: Date.now(), nombre, email, password };
+        // Crear un nuevo paciente con rol por defecto
+        const nuevoPaciente = { 
+            id: Date.now(), 
+            nombre, 
+            email, 
+            password,
+            role: 'paciente'  // Asignamos el rol 'paciente' por defecto
+        };
+
         const updatedPacientes = [...pacientes, nuevoPaciente];
         setPacientes(updatedPacientes);
 
         try {
+            // Guardar los pacientes actualizados en localStorage
             localStorage.setItem('pacientes', JSON.stringify(updatedPacientes));
+
+            // También guardamos el paciente en el array global de usuarios
+            const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+            usuariosGuardados.push(nuevoPaciente);  // Agregamos el paciente a la lista de usuarios
+            localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados));
         } catch (err) {
             setError('Hubo un error al guardar los pacientes.');
             console.error(err);
         }
 
+        // Limpiar los campos de entrada
         setNombre('');
         setEmail('');
         setPassword('');
@@ -49,6 +64,10 @@ function GestionarPacientes() {
 
         try {
             localStorage.setItem('pacientes', JSON.stringify(updatedPacientes));
+            // Eliminamos también de la lista global de usuarios
+            const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const updatedUsuarios = usuariosGuardados.filter(user => user.id !== id);
+            localStorage.setItem('usuarios', JSON.stringify(updatedUsuarios));
         } catch (err) {
             setError('Hubo un error al eliminar el paciente.');
             console.error(err);
@@ -114,6 +133,7 @@ function GestionarPacientes() {
                             <div className="paciente-info">
                                 <span className="paciente-nombre">{paciente.nombre}</span>
                                 <span className="paciente-email">{paciente.email}</span>
+                                <span className="paciente-role">{`Rol: ${paciente.role}`}</span> {/* Mostrar el rol */}
                                 <button onClick={() => eliminarPaciente(paciente.id)} className="eliminar-btn">
                                     Eliminar
                                 </button>
