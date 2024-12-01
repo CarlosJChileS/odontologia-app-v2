@@ -10,12 +10,14 @@ function AgendarCita() {
     const [descripcion, setDescripcion] = useState('');
     const goBackToMenu = useRoleRedirect();
 
+    // Validar solo números para la cédula
     const validarSoloNumeros = (event) => {
         if (isNaN(event.key) && event.key !== 'Backspace' && event.key !== 'Delete') {
             event.preventDefault();
         }
     };
 
+    // Validar solo letras para la descripción
     const validarSoloLetras = (event) => {
         const regex = /^[A-Za-z\s]+$/;
         if (!regex.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete') {
@@ -59,6 +61,7 @@ function AgendarCita() {
         setDescripcion('');
     };
 
+    // Generar las horas disponibles para la cita
     const generarHoras = () => {
         const horas = [];
         for (let h = 8; h < 20; h++) { // Desde las 08:00 hasta las 19:30
@@ -74,7 +77,6 @@ function AgendarCita() {
         <div className="container" id="agendarCita">
             <h1>Agendar Cita</h1>
             <form onSubmit={guardarCita}>
-                {/* Campo para ingresar la cédula */}
                 <input
                     type="text"
                     name="cedula"

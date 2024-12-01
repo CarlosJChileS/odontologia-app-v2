@@ -1,79 +1,258 @@
-/* src/styles/components/GestionarHistoriasClinicas.css */
-
+/* Estilos para el contenedor principal */
 .gestionar-historias-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-}
-
-.gestionar-historias-container h1 {
-    text-align: center;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
     color: #333;
 }
 
-.historias-lista ul {
-    list-style-type: none;
-    padding: 0;
+/* Títulos */
+.gestionar-historias-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 20px;
 }
 
-.historias-lista li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
-    background-color: #fff;
-    border-radius: 5px;
+/* Contenedor de botones para selección de acción */
+.gestionar-historias-container div button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #007bff;
+    background-color: transparent;
+    color: #007bff;
+    font-weight: bold;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.historias-lista li p {
-    margin: 5px 0;
-    color: #555;
-}
-
-.historias-lista button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
+/* Efecto hover en los botones */
+.gestionar-historias-container div button:hover {
     background-color: #007bff;
     color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border-color: #0056b3;
 }
 
-.historias-lista button:hover {
+/* Formulario de agregar historia clínica */
+.input-container {
+    margin-top: 20px;
+    max-height: 60vh; /* Limita la altura máxima del contenedor */
+    overflow-y: auto; /* Permite el desplazamiento vertical */
+    padding-right: 10px; /* Espacio para la barra de desplazamiento */
+}
+
+/* Estilo de los campos del formulario */
+input[type="text"], input[type="number"], textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+/* Efecto focus en los inputs */
+input:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Deshabilitar campos */
+input[type="text"]:disabled, textarea:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+/* Botón de acción dentro del formulario */
+button {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto hover en el botón de guardar historia clínica */
+button:hover {
+    background-color: #218838;
+}
+
+/* Estilos para la lista de citas */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 30px;
+}
+
+ul li {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Hover sobre los elementos de la lista de citas */
+ul li:hover {
+    background-color: #e9ecef;
+    transform: scale(1.02);
+}
+
+/* Información de cada cita */
+ul li p {
+    margin: 8px 0;
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+ul li strong {
+    color: #007bff;
+}
+
+/* Botón para asignar historia clínica a la cita */
+ul li button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto hover en el botón de asignar historia clínica */
+ul li button:hover {
     background-color: #0056b3;
 }
 
+/* Estilo para el contenedor de detalles de la historia clínica */
 .historia-detalles {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 8px;
+    margin-top: 30px;
+    padding: 20px;
     background-color: #e9ecef;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos dentro de los detalles */
 .historia-detalles h2 {
-    color: #333;
+    color: #007bff;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
 .historia-detalles p {
-    margin: 5px 0;
-    color: #444;
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #555;
 }
 
+/* Botón para eliminar historia clínica */
 .historia-detalles button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
     background-color: #dc3545;
     color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
+/* Efecto hover en el botón de eliminar historia clínica */
 .historia-detalles button:hover {
     background-color: #c82333;
+}
+
+/* --- RESPONSIVIDAD --- */
+
+/* En pantallas pequeñas (menos de 600px de ancho) */
+@media (max-width: 600px) {
+    .gestionar-historias-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    /* Títulos */
+    .gestionar-historias-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    /* Ajuste de campos del formulario */
+    input[type="text"], input[type="number"], textarea {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Botón principal */
+    button {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    /* Listado de citas */
+    ul li {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* Detalles de la historia clínica */
+    .historia-detalles {
+        padding: 15px;
+    }
+
+    /* Botones dentro de la lista de citas */
+    ul li button {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+/* En pantallas medianas (600px - 900px de ancho) */
+@media (min-width: 600px) and (max-width: 900px) {
+    .gestionar-historias-container {
+        padding: 25px;
+    }
+
+    /* Títulos */
+    .gestionar-historias-container h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Ajuste de campos del formulario */
+    input[type="text"], input[type="number"], textarea {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    /* Botón principal */
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    /* Listado de citas */
+    ul li {
+        padding: 18px;
+    }
+
+    /* Detalles de la historia clínica */
+    .historia-detalles {
+        padding: 18px;
+    }
 }

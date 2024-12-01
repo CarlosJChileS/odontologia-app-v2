@@ -1,112 +1,110 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/components/GestionarCitas.css';
+import '../styles/components/GestionarHistoriasClinicas.css';
 
-function GestionarCitas() {
+function GestionarHistoriasClinicas() {
+    const [historias, setHistorias] = useState([]);
     const [citas, setCitas] = useState([]);
     const [cedulaPaciente, setCedulaPaciente] = useState('');
-    const [fechaCita, setFechaCita] = useState('');
-    const [motivoCita, setMotivoCita] = useState('');
+    const [tipoSangre, setTipoSangre] = useState('');
+    const [motivoConsulta, setMotivoConsulta] = useState('');
+    const [diagnostico, setDiagnostico] = useState('');
+    const [procedimientos, setProcedimientos] = useState('');
 
     useEffect(() => {
-        // Cargar las citas desde localStorage
+        // Cargar citas e historias clínicas desde localStorage
+        const storedHistorias = JSON.parse(localStorage.getItem('historiasClinicas')) || [];
         const storedCitas = JSON.parse(localStorage.getItem('citas')) || [];
+        setHistorias(storedHistorias);
         setCitas(storedCitas);
     }, []);
 
-    // Función para agregar una nueva cita
-    const agregarCita = () => {
-        if (!cedulaPaciente.trim() || !fechaCita.trim() || !motivoCita.trim()) {
+    const agregarHistoriaClinica = () => {
+        if (!cedulaPaciente.trim() || !tipoSangre.trim() || !motivoConsulta.trim() || !diagnostico.trim() || !procedimientos.trim()) {
             alert('Por favor, completa todos los campos');
             return;
         }
 
-        const nuevaCita = {
-            id: Date.now(),
-            cedulaPaciente,
-            fechaCita,
-            motivoCita,
-            historiaClinica: null // Historia clínica no asociada aún
+        const nuevaHistoria = {
+            idHistoriaClinica: Date.now(),
+            cedula: cedulaPaciente,
+            tipoSangre,
+            motivoConsulta,
+            diagnostico,
+            procedimientos,
         };
 
-        // Actualizar la lista de citas
-        const updatedCitas = [...citas, nuevaCita];
-        setCitas(updatedCitas);
-
-        // Guardar la lista de citas en localStorage
-        localStorage.setItem('citas', JSON.stringify(updatedCitas));
-
-        alert('Cita agregada');
-        setCedulaPaciente('');
-        setFechaCita('');
-        setMotivoCita('');
-    };
-
-    // Función para eliminar una cita
-    const eliminarCita = (id) => {
-        const confirmarEliminar = window.confirm('¿Estás seguro de que deseas eliminar esta cita?');
-        
-        if (confirmarEliminar) {
-            const updatedCitas = citas.filter(cita => cita.id !== id);
-            setCitas(updatedCitas);
-
-            // Guardar las citas actualizadas en localStorage
-            localStorage.setItem('citas', JSON.stringify(updatedCitas));
-
-            alert('Cita eliminada');
+        // Buscar la cita pendiente de historia clínica
+        const citaIndex = citas.findIndex(cita => cita.cedula === cedulaPaciente && !cita.historiaClinica);
+        if (citaIndex === -1) {
+            alert('No se encontró una cita pendiente para esta cédula');
+            return;
         }
+
+        // Asociar la historia clínica a la cita
+        citas[citaIndex].historiaClinica = nuevaHistoria;
+
+        // Actualizar las citas en el localStorage
+        const updatedCitas = [...citas];
+        const updatedHistorias = [...historias, nuevaHistoria];
+        setCitas(updatedCitas);
+        setHistorias(updatedHistorias);
+
+        localStorage.setItem('citas', JSON.stringify(updatedCitas));
+        localStorage.setItem('historiasClinicas', JSON.stringify(updatedHistorias));
+
+        alert('Historia clínica creada y asociada a la cita');
+        setCedulaPaciente('');
+        setTipoSangre('');
+        setMotivoConsulta('');
+        setDiagnostico('');
+        setProcedimientos('');
     };
 
     return (
-        <div className="gestionar-citas-container">
-            <h1>Gestionar Citas</h1>
-            {/* Formulario para agregar una nueva cita */}
-            <div className="input-container">
+        <div className="container" id="gestionarHistorias">
+            <h1>Gestionar Historias Clínicas</h1>
+            <form onSubmit={(e) => { e.preventDefault(); agregarHistoriaClinica(); }}>
                 <input
                     type="text"
+                    name="cedulaPaciente"
+                    placeholder="Cédula del Paciente"
                     value={cedulaPaciente}
                     onChange={(e) => setCedulaPaciente(e.target.value)}
-                    placeholder="Ingrese la cédula del paciente"
-                    aria-label="Cédula del paciente"
+                    required
                 />
                 <input
                     type="text"
-                    value={fechaCita}
-                    onChange={(e) => setFechaCita(e.target.value)}
-                    placeholder="Ingrese la fecha de la cita"
-                    aria-label="Fecha de la cita"
+                    name="tipoSangre"
+                    placeholder="Tipo de Sangre"
+                    value={tipoSangre}
+                    onChange={(e) => setTipoSangre(e.target.value)}
+                    required
                 />
-                <input
-                    type="text"
-                    value={motivoCita}
-                    onChange={(e) => setMotivoCita(e.target.value)}
-                    placeholder="Motivo de la cita"
-                    aria-label="Motivo de la cita"
-                />
-                <button onClick={agregarCita}>Agregar Cita</button>
-            </div>
-
-            {/* Lista de citas */}
-            <ul>
-                {citas.length === 0 ? (
-                    <li>No hay citas registradas.</li>
-                ) : (
-                    citas.map(cita => (
-                        <li key={cita.id}>
-                            <div className="cita-info">
-                                <p><strong>Paciente:</strong> {cita.cedulaPaciente}</p>
-                                <p><strong>Fecha:</strong> {cita.fechaCita}</p>
-                                <p><strong>Motivo de la Cita:</strong> {cita.motivoCita}</p>
-                                <p><strong>Historia Clínica:</strong> {cita.historiaClinica ? 'Asociada' : 'Pendiente'}</p>
-                            </div>
-                            <button onClick={() => eliminarCita(cita.id)} className="eliminar-cita-btn">
-                                Eliminar Cita
-                            </button>
-                        </li>
-                    ))
-                )}
-            </ul>
+                <textarea
+                    name="motivoConsulta"
+                    placeholder="Motivo de la Consulta"
+                    value={motivoConsulta}
+                    onChange={(e) => setMotivoConsulta(e.target.value)}
+                    required
+                ></textarea>
+                <textarea
+                    name="diagnostico"
+                    placeholder="Diagnóstico"
+                    value={diagnostico}
+                    onChange={(e) => setDiagnostico(e.target.value)}
+                    required
+                ></textarea>
+                <textarea
+                    name="procedimientos"
+                    placeholder="Procedimientos"
+                    value={procedimientos}
+                    onChange={(e) => setProcedimientos(e.target.value)}
+                    required
+                ></textarea>
+                <button type="submit">Guardar Historia Clínica</button>
+            </form>
         </div>
     );
 }
 
-export default GestionarCitas;
+export default GestionarHistoriasClinicas;

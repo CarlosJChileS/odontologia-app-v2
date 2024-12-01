@@ -1,57 +1,45 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { Pool } = require('pg');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = 5000;
 
-// Configuración de conexión a PostgreSQL
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-});
-
-// Middleware
-app.use(cors());
 app.use(express.json());
 
-// Endpoint para iniciar sesión
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        const user = result.rows[0];
-
-        if (!user) {
-            return res.status(401).json({ message: 'Usuario no encontrado' });
+// Ruta para obtener los usuarios (lectura del archivo JSON)
+app.get('/api/users', (req, res) => {
+    const filePath = path.join(__dirname, 'users.json');
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error al leer el archivo');
         }
-
-        // Verificar contraseña
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Contraseña incorrecta' });
-        }
-
-        // Generar token JWT
-        const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
-
-        res.json({ token, role: user.role });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
+        res.json(JSON.parse(data));
+    });
 });
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+// Ruta para agregar un odontólogo (escribir en el archivo JSON)
+app.post('/api/users', (req, res) => {
+    const { email, password } = req.body;
+    const filePath = path.join(__dirname, 'users.json');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error al leer el archivo');
+        }
+
+        const users = JSON.parse(data);
+        users.push({ email, password, role: 'odontologo' });
+
+        fs.writeFile(filePath, JSON.stringify(users, null, 2), 'utf8', (err) => {
+            if (err) {
+                return res.status(500).send('Error al escribir el archivo');
+            }
+            res.status(200).send('Odontólogo agregado exitosamente');
+        });
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Servidor escuchando en http://localhost:${port}`);
 });

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Login.css';
+import '../styles/components/Login.css';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,66 +20,46 @@ function Login() {
         }
     }, []);
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+    const handleLogin = () => {
+        const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios')) || [];
+        const usuario = usuariosGuardados.find(user => user.email === email && user.password === password);
 
-        // Recupera los usuarios desde localStorage (ahora en un array global)
-        const users = JSON.parse(localStorage.getItem('usuarios')) || [];
+        if (usuario) {
+            sessionStorage.setItem('usuario', JSON.stringify(usuario));
+            sessionStorage.setItem('rol', usuario.role);
 
-        // Busca al usuario en los datos
-        const user = users.find(u => u.email === email && u.password === password);
-
-        if (user) {
-            // Guardar el rol en sessionStorage
-            sessionStorage.setItem('usuarioRol', user.role);
-
-            // Redirige a la ruta correspondiente según el rol
-            switch (user.role) {
-                case 'admin':
-                    navigate('/menu-administrador');
-                    break;
-                case 'paciente':
-                    navigate('/menu-paciente');
-                    break;
-                case 'odontologo':
-                    navigate('/menu-odontologo');
-                    break;
-                default:
-                    alert('Rol no reconocido. Contacte al administrador.');
-                    break;
+            if (usuario.role === 'admin') {
+                navigate('/admin-dashboard');
+            } else if (usuario.role === 'odontologo') {
+                navigate('/odontologo-dashboard');
+            } else if (usuario.role === 'paciente') {
+                navigate('/paciente-dashboard');
             }
         } else {
-            alert('Credenciales incorrectas. Intenta de nuevo.');
+            setError('Credenciales incorrectas');
         }
     };
 
     return (
         <div className="login-container">
             <h1>Iniciar Sesión</h1>
-            <form onSubmit={handleLogin}>
+            {error && <div className="error">{error}</div>}
+
+            <div className="input-container">
                 <input
                     type="email"
-                    placeholder="Correo electrónico"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Correo electrónico"
                 />
                 <input
                     type="password"
-                    placeholder="Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Contraseña"
                 />
-                <div className="login-buttons">
-                    <button type="submit">Iniciar Sesión</button>
-                    <button
-                        type="button"
-                        className="register-btn"
-                        onClick={() => navigate('/register')}
-                    >
-                        Registrarse
-                    </button>
-                </div>
-            </form>
+                <button onClick={handleLogin}>Iniciar Sesión</button>
+            </div>
         </div>
     );
 }

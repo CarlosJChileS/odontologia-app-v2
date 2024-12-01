@@ -8,7 +8,7 @@ import { useRoleRedirect } from '../helpers/redirectByRole';
 import '../styles/components/Calendario.css';
 
 function Calendario() {
-    const calendarRef = useRef(null);  // Usamos el ref para interactuar directamente con FullCalendar
+    const calendarRef = useRef(null);
     const [eventos, setEventos] = useState([]);
     const goBackToMenu = useRoleRedirect();
 
@@ -37,7 +37,6 @@ function Calendario() {
 
             // Filtramos el evento del calendario y actualizamos el estado
             setEventos((prevEventos) => {
-                // Filtramos los eventos para excluir el evento eliminado
                 return prevEventos.filter(evento => evento.id !== info.event.id);
             });
 

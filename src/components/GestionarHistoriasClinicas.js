@@ -147,71 +147,63 @@ function GestionarHistoriasClinicas() {
                             placeholder="Motivo de consulta"
                             aria-label="Motivo de consulta"
                         />
-                        <input
-                            type="text"
+                        
+                        {/* Campos que tienen más texto */}
+                        <textarea
                             value={enfermedadActual}
                             onChange={(e) => setEnfermedadActual(e.target.value)}
                             placeholder="Enfermedad actual"
                             aria-label="Enfermedad actual"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={antecedentesPatoPersonales}
                             onChange={(e) => setAntecedentesPatoPersonales(e.target.value)}
                             placeholder="Antecedentes Patológicos Personales"
                             aria-label="Antecedentes Patológicos Personales"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={constantesVitales}
                             onChange={(e) => setConstantesVitales(e.target.value)}
                             placeholder="Constantes vitales"
                             aria-label="Constantes vitales"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={sistemaEstomatognatico}
                             onChange={(e) => setSistemaEstomatognatico(e.target.value)}
                             placeholder="Sistema Estomatognático"
                             aria-label="Sistema Estomatognático"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={odontograma}
                             onChange={(e) => setOdontograma(e.target.value)}
                             placeholder="Odontograma"
                             aria-label="Odontograma"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={indicadoresSaludBucal}
                             onChange={(e) => setIndicadoresSaludBucal(e.target.value)}
                             placeholder="Indicadores de salud bucal"
                             aria-label="Indicadores de salud bucal"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={indicesCPO}
                             onChange={(e) => setIndicesCPO(e.target.value)}
                             placeholder="Índices CPO"
                             aria-label="Índices CPO"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={diagnostico}
                             onChange={(e) => setDiagnostico(e.target.value)}
                             placeholder="Diagnóstico"
                             aria-label="Diagnóstico"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={procedimientos}
                             onChange={(e) => setProcedimientos(e.target.value)}
                             placeholder="Procedimientos"
                             aria-label="Procedimientos"
                         />
-                        <input
-                            type="text"
+                        <textarea
                             value={evolucion}
                             onChange={(e) => setEvolucion(e.target.value)}
                             placeholder="Evolución"
