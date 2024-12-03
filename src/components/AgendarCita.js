@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/components/AgendarCita.css';
 
 function AgendarCita() {
-    const [cedula, setCedula] = useState('');
     const [fecha, setFecha] = useState('');
     const [hora, setHora] = useState('');
     const [ubicacion, setUbicacion] = useState('');
@@ -31,27 +30,30 @@ function AgendarCita() {
     // Obtener el rol y cédula del usuario desde el sessionStorage
     useEffect(() => {
         const rol = sessionStorage.getItem('usuarioRol');
-        const usuario = JSON.parse(localStorage.getItem('usuarios')).find(u => u.role === rol);
+        const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
 
-        if (!rol) {
-            alert('No estás logueado. Inicia sesión primero.');
+        const usuario = usuarios.find(u => u.role === rol);
+        if (!rol || !usuario) {
+            alert('No estás logueado o el usuario no existe. Inicia sesión primero.');
             navigate('/login');
-        } else {
-            setUsuarioRol(rol);
-            if (rol === 'paciente' && usuario) {
-                setCedula(usuario.cedula); // Suponemos que la cédula está guardada en el objeto del usuario
-                setUsuarioCedula(usuario.cedula);
-            }
+            return;
         }
-        // Cargar las citas desde localStorage
+
+        setUsuarioRol(rol);
+        if (rol === 'paciente') {
+            setUsuarioCedula(usuario.cedula);  // Guardamos la cédula del paciente logueado
+        }
+
+        // Cargar las citas desde localStorage y filtrarlas por cédula
         const citasGuardadas = JSON.parse(localStorage.getItem('citas')) || [];
-        setCitas(citasGuardadas);
+        const citasFiltradas = citasGuardadas.filter(cita => cita.cedula === usuario.cedula); // Filtrar las citas por cédula
+        setCitas(citasFiltradas);
     }, [navigate]);
 
     const guardarCita = (event) => {
         event.preventDefault();
 
-        if (!cedula || !fecha || !hora || !ubicacion || !descripcion) {
+        if (!usuarioCedula || !fecha || !hora || !ubicacion || !descripcion) {
             alert("Por favor, complete todos los campos.");
             return;
         }
@@ -60,7 +62,7 @@ function AgendarCita() {
         if (!confirmarAgregar) return;
 
         const nuevaCita = {
-            cedula,
+            cedula: usuarioCedula,  // Usamos la cédula del paciente logueado
             fecha,
             hora,
             ubicacion,
@@ -76,11 +78,13 @@ function AgendarCita() {
         // Guardar las citas en localStorage
         localStorage.setItem('citas', JSON.stringify(citasGuardadas));
 
-        // Actualizar el estado local
-        setCitas(citasGuardadas);
+        // Filtrar nuevamente las citas por cédula
+        const citasFiltradas = citasGuardadas.filter(cita => cita.cedula === usuarioCedula);
+
+        // Actualizar el estado de las citas
+        setCitas(citasFiltradas);
 
         alert('Cita guardada con éxito');
-        setCedula('');
         setFecha('');
         setHora('');
         setUbicacion('');
@@ -144,8 +148,8 @@ function AgendarCita() {
                     name="cedula"
                     placeholder="Cédula"
                     maxLength="10"
-                    value={cedula}
-                    onChange={(e) => setCedula(e.target.value)}
+                    value={usuarioCedula}
+                    onChange={(e) => setUsuarioCedula(e.target.value)}
                     onKeyPress={validarSoloNumeros}
                     required
                     disabled={usuarioRol === 'paciente'} // Desactiva el campo si es paciente
@@ -202,11 +206,7 @@ function AgendarCita() {
                 <ul>
                     {citas.map(cita => (
                         <li key={cita.id}>
-                            <strong>Cédula:</strong> {cita.cedula}<br />
-                            <strong>Fecha:</strong> {cita.fecha}<br />
-                            <strong>Hora:</strong> {cita.hora}<br />
-                            <strong>Ubicación:</strong> {cita.ubicacion}<br />
-                            <strong>Descripción:</strong> {cita.descripcion}<br />
+                            <p>{`Fecha: ${cita.fecha}, Hora: ${cita.hora}, Ubicación: ${cita.ubicacion}, Descripción: ${cita.descripcion}`}</p>
                             <button onClick={() => eliminarCita(cita.id)}>Eliminar</button>
                         </li>
                     ))}

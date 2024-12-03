@@ -10,7 +10,7 @@ function Login() {
     // Lista de correos privilegiados
     const correosPrivilegiados = [
         { email: 'admin@ejemplo.com', password: 'admin123', role: 'admin' },
-        { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente' },
+        { email: 'paciente@ejemplo.com', password: 'paciente123', role: 'paciente', cedula: '1234567890' },
         { email: 'odontologo@ejemplo.com', password: 'odontologo123', role: 'odontologo' }
     ];
 
@@ -18,7 +18,7 @@ function Login() {
         // Si no hay usuarios en localStorage, agregamos algunos de prueba
         if (!localStorage.getItem('usuarios')) {
             const usuariosEjemplo = [
-                { email: 'user1@ejemplo.com', password: 'user123', role: 'paciente' },
+                { email: 'user1@ejemplo.com', password: 'user123', role: 'paciente', cedula: '9876543210' },
                 { email: 'user2@ejemplo.com', password: 'user123', role: 'odontologo' }
             ];
             localStorage.setItem('usuarios', JSON.stringify(usuariosEjemplo));
@@ -34,8 +34,11 @@ function Login() {
         );
 
         if (userPrivilegiado) {
-            // Guardar el rol del usuario privilegiado en sessionStorage
+            // Guardar el rol y cédula del usuario privilegiado en sessionStorage
             sessionStorage.setItem('usuarioRol', userPrivilegiado.role);
+            if (userPrivilegiado.cedula) {
+                sessionStorage.setItem('usuarioCedula', userPrivilegiado.cedula); // Guardamos la cédula
+            }
 
             // Redirigir según el rol del usuario privilegiado
             switch (userPrivilegiado.role) {
@@ -62,8 +65,11 @@ function Login() {
         const user = users.find((u) => u.email === email && u.password === password);
 
         if (user) {
-            // Guardar el rol en sessionStorage
+            // Guardar el rol y cédula en sessionStorage
             sessionStorage.setItem('usuarioRol', user.role);
+            if (user.cedula) {
+                sessionStorage.setItem('usuarioCedula', user.cedula); // Guardamos la cédula
+            }
 
             // Redirige a la ruta correspondiente según el rol
             switch (user.role) {

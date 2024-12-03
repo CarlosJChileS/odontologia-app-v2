@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/components/MenuAdministrador.css'; // Asegúrate de tener el archivo CSS
+import '../styles/components/MenuAdministrador.css';
 
 function MenuAdministrador() {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [cedula, setCedula] = useState(''); // Nuevo campo para la cédula
-    const [role, setRole] = useState('paciente'); // Por defecto, paciente
+    const [cedula, setCedula] = useState('');
+    const [role, setRole] = useState('paciente');
     const [usuarios, setUsuarios] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const storedUsuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
         setUsuarios(storedUsuarios);
+
+        const usuarioLogueado = JSON.parse(sessionStorage.getItem('user'));
+        if (usuarioLogueado) {
+            setCedula(usuarioLogueado.cedula);
+        }
     }, []);
 
     const crearUsuario = () => {
@@ -27,7 +32,7 @@ function MenuAdministrador() {
             nombre, 
             email, 
             password, 
-            cedula,  // Agregar cédula al objeto usuario
+            cedula,  
             role 
         };
 
@@ -38,7 +43,7 @@ function MenuAdministrador() {
         setNombre('');
         setEmail('');
         setPassword('');
-        setCedula('');  // Limpiar campo de cédula
+        setCedula('');
         alert('Usuario creado correctamente.');
     };
 
@@ -59,7 +64,6 @@ function MenuAdministrador() {
         <div className="menu-administrador">
             <h1>Menú Administrador</h1>
 
-            {/* Formulario para crear nuevo usuario */}
             <div className="input-container">
                 <input
                     type="text"
@@ -93,7 +97,6 @@ function MenuAdministrador() {
                 <button onClick={crearUsuario}>Crear Usuario</button>
             </div>
 
-            {/* Mostrar lista de usuarios */}
             <div className="usuarios-lista">
                 <h2>Usuarios Registrados</h2>
                 <ul>

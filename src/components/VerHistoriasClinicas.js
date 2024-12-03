@@ -11,8 +11,19 @@ function VerHistoriasClinicas() {
         // Al cargar el componente, intentamos obtener las historias desde el localStorage
         const historiasGuardadas = JSON.parse(localStorage.getItem('historiasClinicas'));
         if (historiasGuardadas) {
-            setHistorias(historiasGuardadas);
-            setMensaje('Historias clínicas cargadas desde el almacenamiento local');
+            const rol = sessionStorage.getItem('usuarioRol');
+            const cedula = sessionStorage.getItem('usuarioCedula'); // Obtener la cédula del usuario desde el sessionStorage
+
+            if (rol === 'paciente') {
+                // Si el rol es paciente, solo mostramos las historias correspondientes a su cédula
+                const historiasPaciente = historiasGuardadas.filter(historia => historia.cedula === cedula);
+                setHistorias(historiasPaciente);
+                setMensaje(historiasPaciente.length > 0 ? 'Historias clínicas cargadas desde el almacenamiento local' : 'No tienes historias clínicas disponibles.');
+            } else {
+                // Si el rol es admin u odontologo, mostramos todas las historias
+                setHistorias(historiasGuardadas);
+                setMensaje('Historias clínicas cargadas desde el almacenamiento local');
+            }
         } else {
             setMensaje('No hay historias clínicas disponibles.');
         }
