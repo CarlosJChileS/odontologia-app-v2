@@ -22,6 +22,7 @@ function MenuAdministrador() {
     }, []);
 
     const crearUsuario = () => {
+        const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóú\s]+$/;
         if (!nombre || !email || !password || !cedula) {
             alert('Por favor ingresa todos los datos del nuevo usuario.');
             return;
